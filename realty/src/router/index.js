@@ -1,6 +1,8 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
 import NotFoundView from '../views/NotFoundView.vue'
+import PropertyDetails from '../views/PropertyDetails.vue'
+import LoginView from '@/views/LoginView.vue'
 
 const validLanguages = ['en', 'hr', 'de', 'it']
 
@@ -23,6 +25,19 @@ const routes = [
     },
   },
   {
+    path: '/:lang/:propertyType/:slug',
+    name: 'propertyDetails',
+    component: PropertyDetails,
+    props: true,
+    beforeEnter: (to, from, next) => {
+      if (validLanguages.includes(to.params.lang)) {
+        next()
+      } else {
+        next({ name: 'notFound' })
+      }
+    },
+  },
+  {
     path: '/:lang/:pathMatch(.*)*',
     name: 'notFoundLang',
     component: NotFoundView,
@@ -31,6 +46,11 @@ const routes = [
     path: '/:pathMatch(.*)*', // Catch-all route for 404
     name: 'notFound',
     component: NotFoundView,
+  },
+  {
+    path: '/login',
+    name: 'login',
+    component: LoginView,
   },
 ]
 
