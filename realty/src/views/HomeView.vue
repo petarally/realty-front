@@ -1,31 +1,35 @@
 <template>
-  <div class="container mx-auto p-4">
-    <FilterComponent
-      :properties="properties"
-      :currentLang="$route.params.lang || 'en'"
-      @filtered="updateFilteredProperties"
-    />
-    <p class="mb-4">{{ message }}</p>
-    <div
-      v-if="filteredProperties.length"
-      class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"
-    >
-      <PropertyCard
-        v-for="property in filteredProperties"
-        :key="property.id"
-        :property="property"
+  <div>
+    <Navbar />
+    <div class="container mx-auto p-4">
+      <FilterComponent
+        :properties="properties"
         :currentLang="$route.params.lang || 'en'"
-        @navigateToProperty="navigateToProperty"
+        @filtered="updateFilteredProperties"
       />
-    </div>
-    <div v-else>
-      <p>No properties available.</p>
+      <p class="mb-4">{{ message }}</p>
+      <div
+        v-if="filteredProperties.length"
+        class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"
+      >
+        <PropertyCard
+          v-for="property in filteredProperties"
+          :key="property.id"
+          :property="property"
+          :currentLang="$route.params.lang || 'en'"
+          @navigateToProperty="navigateToProperty"
+        />
+      </div>
+      <div v-else>
+        <p>No properties available.</p>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
 import { fetchHome } from '@/services/api.js'
+import Navbar from '@/components/Navbar.vue'
 import FilterComponent from '@/components/Filter.vue'
 import PropertyCard from '@/components/PropertyCard.vue'
 
@@ -33,6 +37,7 @@ export default {
   components: {
     FilterComponent,
     PropertyCard,
+    Navbar,
   },
   data() {
     return {
