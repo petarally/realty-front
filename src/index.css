@@ -1,0 +1,16 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  .dark {
+    --tw-bg-opacity: 1;
+    background-color: rgba(
+      31,
+      41,
+      55,
+      var(--tw-bg-opacity)
+    ); /* Example dark background color */
+    color: white; /* Example dark text color */
+  }
+}
