@@ -17,84 +17,11 @@
       <div
         class="flex items-center md:order-2 space-x-1 md:space-x-0 rtl:space-x-reverse"
       >
-        <button
-          type="button"
-          data-dropdown-toggle="language-dropdown-menu"
-          class="inline-flex items-center font-medium justify-center px-4 py-2 text-sm text-gray-900 dark:text-white rounded-lg cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:text-white"
-        >
-          <svg
-            class="w-5 h-5 rounded-full me-3"
-            aria-hidden="true"
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 3900 3900"
-          >
-            <path fill="#b22234" d="M0 0h7410v3900H0z" />
-            <path
-              d="M0 450h7410m0 600H0m0 600h7410m0 600H0m0 600h7410m0 600H0"
-              stroke="#fff"
-              stroke-width="300"
-            />
-            <path fill="#3c3b6e" d="M0 0h2964v2100H0z" />
-            <g fill="#fff">
-              <g id="d">
-                <g id="c">
-                  <g id="e">
-                    <g id="b">
-                      <path
-                        id="a"
-                        d="M247 90l70.534 217.082-184.66-134.164h228.253L176.466 307.082z"
-                      />
-                      <use xlink:href="#a" y="420" />
-                      <use xlink:href="#a" y="840" />
-                      <use xlink:href="#a" y="1260" />
-                    </g>
-                    <use xlink:href="#a" y="1680" />
-                  </g>
-                  <use xlink:href="#b" x="247" y="210" />
-                </g>
-                <use xlink:href="#c" x="494" />
-              </g>
-              <use xlink:href="#d" x="988" />
-              <use xlink:href="#c" x="1976" />
-              <use xlink:href="#e" x="2470" />
-            </g>
-          </svg>
-          English
-        </button>
-        <!-- Dropdown -->
-        <div
-          class="z-50 hidden my-4 text-base list-none bg-white divide-y divide-gray-100 rounded-lg shadow dark:bg-gray-700"
-          id="language-dropdown-menu"
-        >
-          <ul class="py-2 font-medium" role="none">
-            <li v-for="(language, code) in languages" :key="code">
-              <a
-                href="#"
-                class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-600 dark:hover:text-white"
-                role="menuitem"
-                @click.prevent="changeLanguage(code)"
-              >
-                <div class="inline-flex items-center">
-                  <svg
-                    class="h-3.5 w-3.5 rounded-full me-2"
-                    aria-hidden="true"
-                    xmlns="http://www.w3.org/2000/svg"
-                    :viewBox="language.viewBox"
-                  >
-                    <path
-                      v-for="(path, index) in language.paths"
-                      :key="index"
-                      :d="path.d"
-                      :fill="path.fill"
-                    />
-                  </svg>
-                  {{ language.name }}
-                </div>
-              </a>
-            </li>
-          </ul>
-        </div>
-        <!-- Begin of dark mode toggle -->
+        <!-- Language Dropdown -->
+
+        <LanguageDropdown />
+
+        <!-- Dark Mode Toggle -->
         <button
           id="theme-toggle"
           type="button"
@@ -125,7 +52,8 @@
             ></path>
           </svg>
         </button>
-        <!-- End of dark mode toggle -->
+        <!-- End Dark Mode Toggle -->
+
         <button
           data-collapse-toggle="navbar-language"
           type="button"
@@ -134,7 +62,6 @@
           aria-expanded="false"
         >
           <span class="sr-only">Open main menu</span>
-
           <svg
             class="w-5 h-5"
             aria-hidden="true"
@@ -191,12 +118,10 @@
 </template>
 
 <script setup>
-import { onMounted, nextTick, ref } from "vue";
+import { onMounted, nextTick } from "vue";
 import { initFlowbite } from "flowbite";
-import { useI18n } from "vue-i18n";
-const { locale } = useI18n();
+import LanguageDropdown from "./LanguageDropdown.vue";
 
-// initialize components based on data attribute selectors
 onMounted(async () => {
   await nextTick();
   initFlowbite();
@@ -204,7 +129,7 @@ onMounted(async () => {
   var themeToggleDarkIcon = document.getElementById("theme-toggle-dark-icon");
   var themeToggleLightIcon = document.getElementById("theme-toggle-light-icon");
 
-  // Change the icons inside the button based on previous settings
+  // Set initial theme based on localStorage or system settings
   if (
     localStorage.getItem("color-theme") === "dark" ||
     (!("color-theme" in localStorage) &&
@@ -218,11 +143,9 @@ onMounted(async () => {
   var themeToggleBtn = document.getElementById("theme-toggle");
 
   themeToggleBtn.addEventListener("click", function () {
-    // toggle icons inside button
     themeToggleDarkIcon.classList.toggle("hidden");
     themeToggleLightIcon.classList.toggle("hidden");
 
-    // if set via local storage previously
     if (localStorage.getItem("color-theme")) {
       if (localStorage.getItem("color-theme") === "light") {
         document.documentElement.classList.add("dark");
@@ -231,8 +154,6 @@ onMounted(async () => {
         document.documentElement.classList.remove("dark");
         localStorage.setItem("color-theme", "light");
       }
-
-      // if NOT set via local storage previously
     } else {
       if (document.documentElement.classList.contains("dark")) {
         document.documentElement.classList.remove("dark");
@@ -244,53 +165,4 @@ onMounted(async () => {
     }
   });
 });
-
-const languages = ref({
-  en: {
-    name: "English",
-    viewBox: "0 0 512 512",
-    paths: [
-      { fill: "#b22234", d: "M0 0h7410v3900H0z" },
-      {
-        d: "M0 450h7410m0 600H0m0 600h7410m0 600H0m0 600h7410m0 600H0",
-        stroke: "#fff",
-        "stroke-width": "300",
-      },
-      { fill: "#3c3b6e", d: "M0 0h2964v2100H0z" },
-    ],
-  },
-  de: {
-    name: "Deutsch",
-    viewBox: "0 0 512 512",
-    paths: [
-      { d: "M0 341.3h512V512H0z", fill: "#ffce00" },
-      { d: "M0 0h512v170.7H0z", fill: "#000" },
-      { d: "M0 170.7h512v170.6H0z", fill: "#d00" },
-    ],
-  },
-  it: {
-    name: "Italiano",
-    viewBox: "0 0 512 512",
-    paths: [
-      { d: "M0 0h512v512H0z", fill: "#fff" },
-      { d: "M0 0h170.7v512H0z", fill: "#009246" },
-      { d: "M341.3 0H512v512H341.3z", fill: "#ce2b37" },
-    ],
-  },
-  hr: {
-    name: "Hrvatski",
-    viewBox: "0 0 512 512",
-    paths: [
-      { d: "M0 0h512v512H0z", fill: "#fff" },
-      { d: "M0 0h512v170.7H0z", fill: "#ff0000" },
-      { d: "M0 341.3h512V512H0z", fill: "#0000ff" },
-      { d: "M170.7 170.7h170.6v170.6H170.7z", fill: "#fff" },
-      { d: "M192 192h128v128H192z", fill: "#ff0000" },
-    ],
-  },
-});
-
-const changeLanguage = (code) => {
-  locale.value = code;
-};
 </script>
