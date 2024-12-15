@@ -1,13 +1,17 @@
 <template>
   <nav class="bg-white border-gray-200 dark:bg-gray-900 shadow-md px-8">
     <div
-      class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4"
+      class="max-w-screen-xl flex flex-wrap items-center justify-center md:justify-between mx-auto p-4"
     >
-      <a href="/" class="flex items-center space-x-3 rtl:space-x-reverse">
+      <a
+        href="/"
+        class="flex items-center justify-center space-x-3 rtl:space-x-reverse md:justify-start"
+      >
         <span
           class="self-center text-2xl font-semibold whitespace-nowrap dark:text-white"
-          >Realty</span
         >
+          Realty
+        </span>
       </a>
       <div
         class="flex items-center md:order-2 space-x-1 md:space-x-0 rtl:space-x-reverse"
