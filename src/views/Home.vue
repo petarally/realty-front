@@ -11,13 +11,12 @@
       <h2
         class="text-2xl font-semibold text-center my-4 text-gray-700 dark:text-gray-300"
       >
-        Find Your Dream Home with Us
+        {{ $t("main_title") }}
       </h2>
       <h2
         class="text-xl font-medium text-center my-4 text-gray-600 dark:text-gray-400"
       >
-        Explore our wide range of properties and find the perfect place to call
-        home.
+        {{ $t("subtitle") }}
       </h2>
       <div class="flex justify-center">
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">

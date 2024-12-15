@@ -1,0 +1,18 @@
+{
+  "home": "Home",
+  "about": "Chi siamo",
+  "properties": "Proprietà",
+  "location": "Posizione",
+  "property_type": "Tipo di proprietà",
+  "max_price": "Prezzo massimo",
+  "max_area": "Area massima",
+  "property_id": "ID proprietà",
+  "search": "Cerca",
+  "main_title": "Trova la casa dei tuoi sogni con noi",
+  "subtitle": "Esplora la nostra vasta gamma di proprietà e trova il posto perfetto da chiamare casa.",
+  "featured_properties": "Proprietà in evidenza",
+  "details": "Dettagli",
+  "all_properties": "Tutte le proprietà",
+  "contact_us": "Contattaci",
+  "contact_message": "Ti contatteremo il prima possibile."
+}

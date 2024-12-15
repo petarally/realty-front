@@ -1,0 +1,18 @@
+{
+  "home": "Home",
+  "about": "About",
+  "properties": "Properties",
+  "location": "Location",
+  "property_type": "Property Type",
+  "max_price": "Maximum Price",
+  "max_area": "Maximum Area",
+  "property_id": "Property ID",
+  "search": "Search",
+  "main_title": "Find Your Dream Home with Us",
+  "subtitle": "Explore our wide range of properties and find the perfect place to call home.",
+  "featured_properties": "Featured Properties",
+  "details": "Details",
+  "all_properties": "All Properties",
+  "contact_us": "Contact Us",
+  "contact_message": "We'll reach out to you as soon as possible."
+}

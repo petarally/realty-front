@@ -29,7 +29,6 @@
             class="w-5 h-5 rounded-full me-3"
             aria-hidden="true"
             xmlns="http://www.w3.org/2000/svg"
-            xmlns:xlink="http://www.w3.org/1999/xlink"
             viewBox="0 0 3900 3900"
           >
             <path fill="#b22234" d="M0 0h7410v3900H0z" />
@@ -63,7 +62,7 @@
               <use xlink:href="#e" x="2470" />
             </g>
           </svg>
-          English (US)
+          English
         </button>
         <!-- Dropdown -->
         <div
@@ -71,150 +70,28 @@
           id="language-dropdown-menu"
         >
           <ul class="py-2 font-medium" role="none">
-            <li>
+            <li v-for="(language, code) in languages" :key="code">
               <a
                 href="#"
                 class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-600 dark:hover:text-white"
                 role="menuitem"
-              >
-                <div class="inline-flex items-center">
-                  <svg
-                    aria-hidden="true"
-                    class="h-3.5 w-3.5 rounded-full me-2"
-                    xmlns="http://www.w3.org/2000/svg"
-                    id="flag-icon-css-us"
-                    viewBox="0 0 512 512"
-                  >
-                    <g fill-rule="evenodd">
-                      <g stroke-width="1pt">
-                        <path
-                          fill="#bd3d44"
-                          d="M0 0h247v10H0zm0 20h247v10H0zm0 20h247v10H0zm0 20h247v10H0zm0 20h247v10H0zm0 20h247v10H0zm0 20h247v10H0z"
-                          transform="scale(3.9385)"
-                        />
-                        <path
-                          fill="#fff"
-                          d="M0 10h247v10H0zm0 20h247v10H0zm0 20h247v10H0zm0 20h247v10H0zm0 20h247v10H0zm0 20h247v10H0z"
-                          transform="scale(3.9385)"
-                        />
-                      </g>
-                      <path
-                        fill="#192f5d"
-                        d="M0 0h98.8v70H0z"
-                        transform="scale(3.9385)"
-                      />
-                      <path
-                        fill="#fff"
-                        d="M8.2 3l1 2.8H12L9.7 7.5l.9 2.7-2.4-1.7L6 10.2l.9-2.7-2.4-1.7h3zm16.5 0l.9 2.8h2.9l-2.4 1.7 1 2.7-2.4-1.7-2.4 1.7 1-2.7-2.4-1.7h2.9zm16.5 0l.9 2.8H45l-2.4 1.7 1 2.7-2.4-1.7-2.4 1.7 1-2.7-2.4-1.7h2.9zm16.4 0l1 2.8h2.8l-2.3 1.7.9 2.7-2.4-1.7-2.3 1.7.9-2.7-2.4-1.7h3zm16.5 0l.9 2.8h2.9l-2.4 1.7 1 2.7L74 8.5l-2.3 1.7.9-2.7-2.4-1.7h2.9zm16.5 0l.9 2.8h2.9L92 7.5l1 2.7-2.4-1.7-2.4 1.7 1-2.7-2.4-1.7h2.9zm-74.1 7l.9 2.8h2.9l-2.4 1.7 1 2.7-2.4-1.7-2.4 1.7 1-2.7-2.4-1.7h2.9zm16.4 0l1 2.8h2.8l-2.3 1.7.9 2.7-2.4-1.7-2.3 1.7.9-2.7-2.4-1.7h3zm16.5 0l.9 2.8h2.9l-2.4 1.7 1 2.7-2.4-1.7-2.4 1.7 1-2.7-2.4-1.7h2.9zm16.5 0l.9 2.8h2.9l-2.4 1.7 1 2.7-2.4-1.7-2.4 1.7 1-2.7-2.4-1.7H65zm16.4 0l1 2.8H86l-2.3 1.7.9 2.7-2.4-1.7-2.3 1.7.9-2.7-2.4-1.7h3zm-74 7l.8 2.8h3l-2.4 1.7.9 2.7-2.4-1.7L6 24.2l.9-2.7-2.4-1.7h3zm16.4 0l.9 2.8h2.9l-2.3 1.7.9 2.7-2.4-1.7-2.3 1.7.9-2.7-2.4-1.7h2.9zm16.5 0l.9 2.8H45l-2.4 1.7 1 2.7-2.4-1.7-2.4 1.7 1-2.7-2.4-1.7h2.9zm16.4 0l1 2.8h2.8l-2.3 1.7.9 2.7-2.4-1.7-2.3 1.7.9-2.7-2.4-1.7h3zm16.5 0l.9 2.8h2.9l-2.3 1.7.9 2.7-2.4-1.7-2.3 1.7.9-2.7-2.4-1.7h2.9zm16.5 0l.9 2.8h2.9L92 21.5l1 2.7-2.4-1.7-2.4 1.7 1-2.7-2.4-1.7h2.9zm-74.1 7l.9 2.8h2.9l-2.4 1.7 1 2.7-2.4-1.7-2.4 1.7 1-2.7-2.4-1.7h2.9zm16.4 0l1 2.8h2.8l-2.3 1.7.9 2.7-2.4-1.7-2.3 1.7.9-2.7-2.4-1.7h3zm16.5 0l.9 2.8h2.9l-2.3 1.7.9 2.7-2.4-1.7-2.3 1.7.9-2.7-2.4-1.7h2.9zm16.5 0l.9 2.8h2.9l-2.4 1.7 1 2.7-2.4-1.7-2.4 1.7 1-2.7-2.4-1.7H65zm16.4 0l1 2.8H86l-2.3 1.7.9 2.7-2.4-1.7-2.3 1.7.9-2.7-2.4-1.7h3zm-74 7l.8 2.8h3l-2.4 1.7.9 2.7-2.4-1.7L6 38.2l.9-2.7-2.4-1.7h3zm16.4 0l.9 2.8h2.9l-2.3 1.7.9 2.7-2.4-1.7-2.3 1.7.9-2.7-2.4-1.7h2.9zm16.5 0l.9 2.8H45l-2.4 1.7 1 2.7-2.4-1.7-2.4 1.7 1-2.7-2.4-1.7h2.9zm16.4 0l1 2.8h2.8l-2.3 1.7.9 2.7-2.4-1.7-2.3 1.7.9-2.7-2.4-1.7h3zm16.5 0l.9 2.8h2.9l-2.3 1.7.9 2.7-2.4-1.7-2.3 1.7.9-2.7-2.4-1.7h2.9zm16.5 0l.9 2.8h2.9L92 35.5l1 2.7-2.4-1.7-2.4 1.7 1-2.7-2.4-1.7h2.9zm-74.1 7l.9 2.8h2.9l-2.4 1.7 1 2.7-2.4-1.7-2.4 1.7 1-2.7-2.4-1.7h2.9zm16.4 0l1 2.8h2.8l-2.3 1.7.9 2.7-2.4-1.7-2.3 1.7.9-2.7-2.4-1.7h3zm16.5 0l.9 2.8h2.9l-2.3 1.7.9 2.7-2.4-1.7-2.3 1.7.9-2.7-2.4-1.7h2.9zm16.5 0l.9 2.8h2.9l-2.4 1.7 1 2.7-2.4-1.7-2.4 1.7 1-2.7-2.4-1.7H65zm16.4 0l1 2.8H86l-2.3 1.7.9 2.7-2.4-1.7-2.3 1.7.9-2.7-2.4-1.7h3zm-74 7l.8 2.8h3l-2.4 1.7.9 2.7-2.4-1.7L6 52.2l.9-2.7-2.4-1.7h3zm16.4 0l.9 2.8h2.9l-2.3 1.7.9 2.7-2.4-1.7-2.3 1.7.9-2.7-2.4-1.7h2.9zm16.5 0l.9 2.8H45l-2.4 1.7 1 2.7-2.4-1.7-2.4 1.7 1-2.7-2.4-1.7h2.9zm16.4 0l1 2.8h2.8l-2.3 1.7.9 2.7-2.4-1.7-2.3 1.7.9-2.7-2.4-1.7h3zm16.5 0l.9 2.8h2.9l-2.3 1.7.9 2.7-2.4-1.7-2.3 1.7.9-2.7-2.4-1.7h2.9zm16.5 0l.9 2.8h2.9L92 49.5l1 2.7-2.4-1.7-2.4 1.7 1-2.7-2.4-1.7h2.9zm-74.1 7l.9 2.8h2.9l-2.4 1.7 1 2.7-2.4-1.7-2.4 1.7 1-2.7-2.4-1.7h2.9zm16.4 0l1 2.8h2.8l-2.3 1.7.9 2.7-2.4-1.7-2.3 1.7.9-2.7-2.4-1.7h3zm16.5 0l.9 2.8h2.9l-2.3 1.7.9 2.7-2.4-1.7-2.3 1.7.9-2.7-2.4-1.7h2.9zm16.5 0l.9 2.8h2.9l-2.4 1.7 1 2.7-2.4-1.7-2.4 1.7 1-2.7-2.4-1.7H65zm16.4 0l1 2.8H86l-2.3 1.7.9 2.7-2.4-1.7-2.3 1.7.9-2.7-2.4-1.7h3zm-74 7l.8 2.8h3l-2.4 1.7.9 2.7-2.4-1.7L6 66.2l.9-2.7-2.4-1.7h3zm16.4 0l.9 2.8h2.9l-2.3 1.7.9 2.7-2.4-1.7-2.3 1.7.9-2.7-2.4-1.7h2.9zm16.5 0l.9 2.8H45l-2.4 1.7 1 2.7-2.4-1.7-2.4 1.7 1-2.7-2.4-1.7h2.9zm16.4 0l1 2.8h2.8l-2.3 1.7.9 2.7-2.4-1.7-2.3 1.7.9-2.7-2.4-1.7h3zm16.5 0l.9 2.8h2.9l-2.3 1.7.9 2.7-2.4-1.7-2.3 1.7.9-2.7-2.4-1.7h2.9zm16.5 0l.9 2.8h2.9L92 63.5l1 2.7-2.4-1.7-2.4 1.7 1-2.7-2.4-1.7h2.9z"
-                        transform="scale(3.9385)"
-                      />
-                    </g>
-                  </svg>
-                  English (US)
-                </div>
-              </a>
-            </li>
-            <li>
-              <a
-                href="#"
-                class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-600 dark:hover:text-white"
-                role="menuitem"
+                @click.prevent="changeLanguage(code)"
               >
                 <div class="inline-flex items-center">
                   <svg
                     class="h-3.5 w-3.5 rounded-full me-2"
                     aria-hidden="true"
                     xmlns="http://www.w3.org/2000/svg"
-                    id="flag-icon-css-de"
-                    viewBox="0 0 512 512"
+                    :viewBox="language.viewBox"
                   >
-                    <path fill="#ffce00" d="M0 341.3h512V512H0z" />
-                    <path d="M0 0h512v170.7H0z" />
-                    <path fill="#d00" d="M0 170.7h512v170.6H0z" />
-                  </svg>
-                  Deutsch
-                </div>
-              </a>
-            </li>
-            <li>
-              <a
-                href="#"
-                class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-600 dark:hover:text-white"
-                role="menuitem"
-              >
-                <div class="inline-flex items-center">
-                  <svg
-                    class="h-3.5 w-3.5 rounded-full me-2"
-                    aria-hidden="true"
-                    xmlns="http://www.w3.org/2000/svg"
-                    id="flag-icon-css-it"
-                    viewBox="0 0 512 512"
-                  >
-                    <g fill-rule="evenodd" stroke-width="1pt">
-                      <path fill="#fff" d="M0 0h512v512H0z" />
-                      <path fill="#009246" d="M0 0h170.7v512H0z" />
-                      <path fill="#ce2b37" d="M341.3 0H512v512H341.3z" />
-                    </g>
-                  </svg>
-                  Italiano
-                </div>
-              </a>
-            </li>
-            <li>
-              <a
-                href="#"
-                class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-600 dark:hover:text-white"
-                role="menuitem"
-              >
-                <div class="inline-flex items-center">
-                  <svg
-                    class="h-3.5 w-3.5 rounded-full me-2"
-                    aria-hidden="true"
-                    xmlns="http://www.w3.org/2000/svg"
-                    xmlns:xlink="http://www.w3.org/1999/xlink"
-                    id="flag-icon-css-cn"
-                    viewBox="0 0 512 512"
-                  >
-                    <defs>
-                      <path
-                        id="a"
-                        fill="#ffde00"
-                        d="M1-.3L-.7.8 0-1 .6.8-1-.3z"
-                      />
-                    </defs>
-                    <path fill="#de2910" d="M0 0h512v512H0z" />
-                    <use
-                      width="30"
-                      height="20"
-                      transform="matrix(76.8 0 0 76.8 128 128)"
-                      xlink:href="#a"
-                    />
-                    <use
-                      width="30"
-                      height="20"
-                      transform="rotate(-121 142.6 -47) scale(25.5827)"
-                      xlink:href="#a"
-                    />
-                    <use
-                      width="30"
-                      height="20"
-                      transform="rotate(-98.1 198 -82) scale(25.6)"
-                      xlink:href="#a"
-                    />
-                    <use
-                      width="30"
-                      height="20"
-                      transform="rotate(-74 272.4 -114) scale(25.6137)"
-                      xlink:href="#a"
-                    />
-                    <use
-                      width="30"
-                      height="20"
-                      transform="matrix(16 -19.968 19.968 16 256 230.4)"
-                      xlink:href="#a"
+                    <path
+                      v-for="(path, index) in language.paths"
+                      :key="index"
+                      :d="path.d"
+                      :fill="path.fill"
                     />
                   </svg>
-                  中文 (繁體)
+                  {{ language.name }}
                 </div>
               </a>
             </li>
@@ -291,7 +168,7 @@
               class="block py-2 px-3 rounded md:p-0"
               active-class="text-blue-700 dark:text-blue-500"
               aria-current="page"
-              >Home</router-link
+              >{{ $t("home") }}</router-link
             >
           </li>
           <li>
@@ -299,7 +176,7 @@
               to="/about"
               class="block py-2 px-3 rounded md:p-0"
               active-class="text-blue-700 dark:text-blue-500"
-              >About</router-link
+              >{{ $t("about") }}</router-link
             >
           </li>
           <li>
@@ -307,7 +184,7 @@
               to="/properties"
               class="block py-2 px-3 rounded md:p-0"
               active-class="text-blue-700 dark:text-blue-500"
-              >Properties</router-link
+              >{{ $t("properties") }}</router-link
             >
           </li>
         </ul>
@@ -317,8 +194,10 @@
 </template>
 
 <script setup>
-import { onMounted, nextTick } from "vue";
+import { onMounted, nextTick, ref } from "vue";
 import { initFlowbite } from "flowbite";
+import { useI18n } from "vue-i18n";
+const { locale } = useI18n();
 
 // initialize components based on data attribute selectors
 onMounted(async () => {
@@ -368,4 +247,53 @@ onMounted(async () => {
     }
   });
 });
+
+const languages = ref({
+  en: {
+    name: "English",
+    viewBox: "0 0 512 512",
+    paths: [
+      { d: "M0 0h512v512H0z", fill: "#012169" },
+      { d: "M0 0l512 512m0-512L0 512", stroke: "#fff", "stroke-width": 60 },
+      { d: "M0 0l512 512m0-512L0 512", stroke: "#c8102e", "stroke-width": 40 },
+      { d: "M211 0h90v512h-90z", fill: "#fff" },
+      { d: "M0 211h512v90H0z", fill: "#fff" },
+      { d: "M226 0h60v512h-60z", fill: "#c8102e" },
+      { d: "M0 226h512v60H0z", fill: "#c8102e" },
+    ],
+  },
+  de: {
+    name: "Deutsch",
+    viewBox: "0 0 512 512",
+    paths: [
+      { d: "M0 341.3h512V512H0z", fill: "#ffce00" },
+      { d: "M0 0h512v170.7H0z", fill: "#000" },
+      { d: "M0 170.7h512v170.6H0z", fill: "#d00" },
+    ],
+  },
+  it: {
+    name: "Italiano",
+    viewBox: "0 0 512 512",
+    paths: [
+      { d: "M0 0h512v512H0z", fill: "#fff" },
+      { d: "M0 0h170.7v512H0z", fill: "#009246" },
+      { d: "M341.3 0H512v512H341.3z", fill: "#ce2b37" },
+    ],
+  },
+  hr: {
+    name: "Hrvatski",
+    viewBox: "0 0 512 512",
+    paths: [
+      { d: "M0 0h512v512H0z", fill: "#fff" },
+      { d: "M0 0h512v170.7H0z", fill: "#ff0000" },
+      { d: "M0 341.3h512V512H0z", fill: "#0000ff" },
+      { d: "M170.7 170.7h170.6v170.6H170.7z", fill: "#fff" },
+      { d: "M192 192h128v128H192z", fill: "#ff0000" },
+    ],
+  },
+});
+
+const changeLanguage = (code) => {
+  locale.value = code;
+};
 </script>

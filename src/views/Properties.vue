@@ -3,7 +3,7 @@
     <Navbar />
     <div class="px-4 md:px-8 lg:px-12 xl:px-16">
       <div class="flex justify-between items-center mb-4">
-        <h1 class="text-2xl font-bold">All Properties</h1>
+        <h1 class="text-2xl font-bold">{{ $t("all_properties") }}</h1>
         <div class="flex space-x-4">
           <select
             id="sort"

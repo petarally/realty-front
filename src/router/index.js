@@ -23,7 +23,7 @@ const routes = [
   },
   {
     path: "/agent",
-    component: Admin,
+    component: Agent,
     meta: { requiresAuth: false } /* promijeniti u true */,
   },
 

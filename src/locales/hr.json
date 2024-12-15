@@ -1,0 +1,18 @@
+{
+  "home": "Početna",
+  "about": "O nama",
+  "properties": "Nekretnine",
+  "location": "Lokacija",
+  "property_type": "Vrsta nekretnine",
+  "max_price": "Maksimalna cijena",
+  "max_area": "Maksimalna površina",
+  "property_id": "ID nekretnine",
+  "search": "Pretraži",
+  "main_title": "Pronađite svoj dom iz snova s nama",
+  "subtitle": "Istražite naš široki izbor nekretnina i pronađite savršeno mjesto za život.",
+  "featured_properties": "Istaknute nekretnine",
+  "details": "Detalji",
+  "all_properties": "Sve nekretnine",
+  "contact_us": "Kontaktirajte nas",
+  "contact_message": "Javit ćemo vam se što je prije moguće."
+}
