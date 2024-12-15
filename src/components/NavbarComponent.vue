@@ -253,13 +253,13 @@ const languages = ref({
     name: "English",
     viewBox: "0 0 512 512",
     paths: [
-      { d: "M0 0h512v512H0z", fill: "#012169" },
-      { d: "M0 0l512 512m0-512L0 512", stroke: "#fff", "stroke-width": 60 },
-      { d: "M0 0l512 512m0-512L0 512", stroke: "#c8102e", "stroke-width": 40 },
-      { d: "M211 0h90v512h-90z", fill: "#fff" },
-      { d: "M0 211h512v90H0z", fill: "#fff" },
-      { d: "M226 0h60v512h-60z", fill: "#c8102e" },
-      { d: "M0 226h512v60H0z", fill: "#c8102e" },
+      { fill: "#b22234", d: "M0 0h7410v3900H0z" },
+      {
+        d: "M0 450h7410m0 600H0m0 600h7410m0 600H0m0 600h7410m0 600H0",
+        stroke: "#fff",
+        "stroke-width": "300",
+      },
+      { fill: "#3c3b6e", d: "M0 0h2964v2100H0z" },
     ],
   },
   de: {
