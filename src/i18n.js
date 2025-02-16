@@ -13,8 +13,10 @@ function getLocale() {
   };
 }
 
+const locale = localStorage.getItem("language") || "hr";
+
 export default createI18n({
-  locale: "hr",
+  locale,
   fallbackLocale: "hr",
   messages: getLocale(),
 });

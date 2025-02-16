@@ -14,5 +14,18 @@
   "details": "Details",
   "all_properties": "All Properties",
   "contact_us": "Contact Us",
-  "contact_message": "We'll reach out to you as soon as possible."
+  "contact_message": "We'll reach out to you as soon as possible.",
+  "description": "Description",
+  "amenitiesLabels": {
+    "accessToBeach": "Access to Beach",
+    "garage": "Garage",
+    "parking": "Parking",
+    "pool": "Pool",
+    "seaView": "Sea View",
+    "septicTank": "Septic Tank",
+    "sewageSystem": "Sewage System",
+    "wifi": "WiFi"
+  },
+  "cookie_message": "This website uses cookies to provide you with the best possible experience.",
+  "accept": "Accept"
 }

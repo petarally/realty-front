@@ -14,5 +14,18 @@
   "details": "Detalji",
   "all_properties": "Sve nekretnine",
   "contact_us": "Kontaktirajte nas",
-  "contact_message": "Javit ćemo vam se što je prije moguće."
+  "contact_message": "Javit ćemo vam se što je prije moguće.",
+  "description": "Opis",
+  "amenitiesLabels": {
+    "accessToBeach": "Pristup plaži",
+    "garage": "Garaža",
+    "parking": "Parkiralište",
+    "pool": "Bazen",
+    "seaView": "Pogled na more",
+    "septicTank": "Spremnik za otpadne vode",
+    "sewageSystem": "Sustav odvodnje",
+    "wifi": "WiFi"
+  },
+  "cookie_message": "Ova stranica koristi kolačiće kako bi vam pružila najbolje moguće iskustvo.",
+  "accept": "Prihvati"
 }

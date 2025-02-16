@@ -38,14 +38,14 @@
 <script setup>
 import { ref } from "vue";
 import VueEasyLightbox from "vue-easy-lightbox";
+import { defineProps } from "vue";
 
-const images = ref([
-  "https://via.placeholder.com/800x600",
-  "https://via.placeholder.com/400x300",
-  "https://via.placeholder.com/400x300",
-  "https://via.placeholder.com/400x300",
-  "https://via.placeholder.com/400x300",
-]);
+const props = defineProps({
+  images: {
+    type: Array,
+    required: true,
+  },
+});
 
 const visibleRef = ref(false);
 const indexRef = ref(0);

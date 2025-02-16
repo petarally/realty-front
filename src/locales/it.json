@@ -14,5 +14,18 @@
   "details": "Dettagli",
   "all_properties": "Tutte le proprietà",
   "contact_us": "Contattaci",
-  "contact_message": "Ti contatteremo il prima possibile."
+  "contact_message": "Ti contatteremo il prima possibile.",
+  "description": "Descrizione",
+  "amenitiesLabels": {
+    "accessToBeach": "Accesso alla spiaggia",
+    "garage": "Garage",
+    "parking": "Parcheggio",
+    "pool": "Piscina",
+    "seaView": "Vista mare",
+    "septicTank": "Fossa settica",
+    "sewageSystem": "Sistema fognario",
+    "wifi": "WiFi"
+  },
+  "cookie_message": "Questo sito web utilizza i cookie per offrirti la migliore esperienza possibile.",
+  "accept": "Accetta"
 }

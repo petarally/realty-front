@@ -14,5 +14,18 @@
   "details": "Details",
   "all_properties": "Alle Immobilien",
   "contact_us": "Kontaktieren Sie uns",
-  "contact_message": "Wir werden uns so schnell wie möglich bei Ihnen melden."
+  "contact_message": "Wir werden uns so schnell wie möglich bei Ihnen melden.",
+  "description": "Beschreibung",
+  "amenitiesLabels": {
+    "accessToBeach": "Zugang zum Strand",
+    "garage": "Garage",
+    "parking": "Parkplatz",
+    "pool": "Pool",
+    "seaView": "Meerblick",
+    "septicTank": "Klärgrube",
+    "sewageSystem": "Abwassersystem",
+    "wifi": "WiFi"
+  },
+  "cookie_message": "Diese Seite verwendet Cookies, um Ihnen das bestmögliche Erlebnis zu bieten.",
+  "accept": "Akzeptieren"
 }

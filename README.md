@@ -1,2 +1,2 @@
-# realty-front
-Frontend za aplikaciju za kolegij WA 24/25
+# istrian-villa
+Istrian Villa web

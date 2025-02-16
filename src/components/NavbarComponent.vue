@@ -1,5 +1,31 @@
 <template>
-  <nav class="bg-white border-gray-200 dark:bg-gray-900 shadow-md px-8">
+  <nav class="bg-white border-gray-200 dark:bg-gray-900 shadow-md">
+    <!-- Upper Navbar Menu -->
+    <div class="dark:bg-gray-800 py-2" style="background-color: #546dac">
+      <div
+        class="max-w-screen-xl mx-auto flex justify-between items-center px-4"
+      >
+        <div class="flex space-x-4">
+          <a
+            href="mailto:villaistrian@gmail.com"
+            style="color: #c0c5d0"
+            class="dark:text-gray-300 hover:text-gray-900 dark:hover:text-white flex items-center"
+          >
+            <i class="fas fa-envelope mr-2"></i> villaistrian@gmail.com
+          </a>
+        </div>
+        <div class="flex space-x-4">
+          <a
+            href="tel:+00385916002494"
+            style="color: #c0c5d0"
+            class="text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white flex items-center"
+          >
+            <i class="fas fa-phone mr-2"></i> {{ $t("contact_us") }}
+          </a>
+        </div>
+      </div>
+    </div>
+    <!-- End Upper Navbar Menu -->
     <div
       class="max-w-screen-xl flex flex-wrap items-center justify-center md:justify-between mx-auto p-4"
     >
@@ -7,11 +33,7 @@
         href="/"
         class="flex items-center justify-center space-x-3 rtl:space-x-reverse md:justify-start"
       >
-        <span
-          class="self-center text-2xl font-semibold whitespace-nowrap dark:text-white"
-        >
-          Realty
-        </span>
+        <img src="../assets/logo.png" alt="istrian-villa-logo" class="w-40" />
       </a>
       <div
         class="flex items-center md:order-2 space-x-1 md:space-x-0 rtl:space-x-reverse"
@@ -84,16 +106,16 @@
         >
           <li>
             <router-link
-              to="/"
+              :to="`/${selectedLanguage.code}/`"
               class="block py-2 px-3 rounded md:p-0"
-              active-class="text-blue-700 dark:text-blue-500"
+              exact-active-class="text-blue-700 dark:text-blue-500"
               aria-current="page"
               >{{ $t("home") }}</router-link
             >
           </li>
           <li>
             <router-link
-              to="/about"
+              :to="`/${selectedLanguage.code}/about`"
               class="block py-2 px-3 rounded md:p-0"
               active-class="text-blue-700 dark:text-blue-500"
               >{{ $t("about") }}</router-link
@@ -101,7 +123,7 @@
           </li>
           <li>
             <router-link
-              to="/properties"
+              :to="`/${selectedLanguage.code}/properties`"
               class="block py-2 px-3 rounded md:p-0"
               active-class="text-blue-700 dark:text-blue-500"
               >{{ $t("properties") }}</router-link
@@ -117,7 +139,10 @@
 <script setup>
 import { onMounted, nextTick } from "vue";
 import { initFlowbite } from "flowbite";
+import { inject } from "vue";
 import LanguageDropdown from "./LanguageDropdown.vue";
+
+const selectedLanguage = inject("selectedLanguage");
 
 onMounted(async () => {
   await nextTick();

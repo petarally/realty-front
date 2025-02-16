@@ -1,7 +1,7 @@
 <template>
   <div>
     <Navbar />
-    <div class="px-4 md:px-8 lg:px-12 xl:px-16">
+    <div class="px-4 md:px-8 lg:px-12 xl:px-16 mt-12">
       <div class="flex justify-between items-center mb-4">
         <h1 class="text-2xl font-bold">{{ $t("all_properties") }}</h1>
         <div class="flex space-x-4">
@@ -13,17 +13,19 @@
           >
             <option value="price-asc">Price: Low to High</option>
             <option value="price-desc">Price: High to Low</option>
-            <option value="likes-asc">Likes: Low to High</option>
-            <option value="likes-desc">Likes: High to Low</option>
           </select>
         </div>
       </div>
       <!-- Properties list goes here -->
-      <div class="flex justify-center">
+      <div class="flex justify-center mt-12">
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-          <PropertyCard
-            v-for="property in paginatedProperties"
-            :key="property.id"
+          <PropertyCardComponent
+            v-for="post in paginatedProperties"
+            :key="post._id"
+            :post="post"
+            @card-click="handleCardClick"
+            data-aos="fade-up"
+            data-aos-duration="1000"
           />
         </div>
       </div>
@@ -32,7 +34,7 @@
         aria-label="Page navigation example"
         class="pagination-container"
       >
-        <ul class="flex items-center -space-x-px h-10 text-base">
+        <ul class="flex items-center -space-x-px h-10 text-base mt-12">
           <li>
             <button
               @click="prevPage"
@@ -105,35 +107,38 @@
 </template>
 
 <script setup>
-import { ref, computed } from "vue";
+import { ref, onMounted, computed } from "vue";
+import { useRoute, useRouter } from "vue-router";
 import Navbar from "../components/NavbarComponent.vue";
-import PropertyCard from "../components/PropertyCardComponent.vue";
+import PropertyCardComponent from "../components/PropertyCardComponent.vue";
 import Footer from "../components/FooterComponent.vue";
+import axios from "../axios";
 
-const properties = ref([
-  { id: 1, name: "Property 1", price: 100000, likes: 10 },
-  { id: 2, name: "Property 2", price: 200000, likes: 20 },
-  { id: 3, name: "Property 3", price: 300000, likes: 30 },
-  { id: 4, name: "Property 4", price: 400000, likes: 40 },
-  { id: 5, name: "Property 5", price: 500000, likes: 50 },
-  { id: 6, name: "Property 6", price: 600000, likes: 60 },
-  { id: 7, name: "Property 7", price: 700000, likes: 70 },
-  { id: 8, name: "Property 8", price: 800000, likes: 80 },
-  { id: 9, name: "Property 9", price: 900000, likes: 90 },
-  { id: 10, name: "Property 10", price: 1000000, likes: 100 },
-  { id: 11, name: "Property 11", price: 1100000, likes: 110 },
-  { id: 12, name: "Property 12", price: 1200000, likes: 120 },
-  { id: 13, name: "Property 13", price: 1300000, likes: 130 },
-  { id: 14, name: "Property 14", price: 1400000, likes: 140 },
-  { id: 15, name: "Property 15", price: 1500000, likes: 150 },
-]);
+const route = useRoute();
+const router = useRouter();
+const responseData = ref([]);
+
+const fetchData = async () => {
+  try {
+    const response = await axios.get("/api/search", {
+      params: route.query,
+    });
+    responseData.value = response.data;
+  } catch (error) {
+    console.error("Error fetching data:", error);
+  }
+};
+
+onMounted(() => {
+  fetchData();
+});
 
 const itemsPerPage = 12;
 const currentPage = ref(1);
 const sortOption = ref("price-asc");
 
 const totalPages = computed(() =>
-  Math.ceil(properties.value.length / itemsPerPage)
+  Math.ceil(responseData.value.length / itemsPerPage)
 );
 
 const paginatedProperties = computed(() => {
@@ -143,43 +148,42 @@ const paginatedProperties = computed(() => {
 });
 
 const sortedProperties = computed(() => {
-  return [...properties.value].sort((a, b) => {
+  return [...responseData.value].sort((a, b) => {
     if (sortOption.value === "price-asc") {
       return a.price - b.price;
     } else if (sortOption.value === "price-desc") {
       return b.price - a.price;
-    } else if (sortOption.value === "likes-asc") {
-      return a.likes - b.likes;
-    } else if (sortOption.value === "likes-desc") {
-      return b.likes - a.likes;
     }
   });
-});
-
-const emptySlots = computed(() => {
-  return itemsPerPage - paginatedProperties.value.length;
 });
 
 const goToPage = (page) => {
   if (page >= 1 && page <= totalPages.value) {
     currentPage.value = page;
+    window.scrollTo({ top: 0, behavior: "smooth" });
   }
 };
 
 const prevPage = () => {
   if (currentPage.value > 1) {
     currentPage.value--;
+    window.scrollTo({ top: 0, behavior: "smooth" });
   }
 };
 
 const nextPage = () => {
   if (currentPage.value < totalPages.value) {
     currentPage.value++;
+    window.scrollTo({ top: 0, behavior: "smooth" });
   }
 };
 
 const sortProperties = () => {
   currentPage.value = 1; // Reset to the first page when sorting changes
+};
+
+const handleCardClick = (id) => {
+  router.push({ name: "Property", params: { id } });
 };
 </script>
 

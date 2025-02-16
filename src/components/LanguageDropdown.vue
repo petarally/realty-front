@@ -3,24 +3,24 @@
     <div
       class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4"
     >
+      <!-- Use a relatively positioned container for the button and dropdown -->
       <div
-        class="flex items-center md:order-2 space-x-1 md:space-x-0 rtl:space-x-reverse"
+        class="relative flex items-center md:order-2 space-x-1 md:space-x-0 rtl:space-x-reverse"
       >
         <button
-          type="button"
-          data-dropdown-toggle="language-dropdown-menu"
+          @click="toggleDropdown"
           class="inline-flex items-center font-medium justify-center px-4 py-2 text-sm text-gray-900 dark:text-white rounded-lg cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:text-white"
         >
-          <!-- Dynamically display the selected language's flag -->
           <span class="h-5 w-5 me-3">{{ selectedLanguage.flag }}</span>
           {{ selectedLanguage.name }}
         </button>
-        <!-- Dropdown -->
+
+        <!-- Dropdown (absolute to avoid expanding nav) -->
         <div
-          id="language-dropdown-menu"
-          class="z-50 hidden my-4 text-base list-none bg-white divide-y divide-gray-100 rounded-lg shadow dark:bg-gray-700"
+          v-if="isOpen"
+          class="absolute top-full right-0 z-50 my-2 w-40 bg-white divide-y divide-gray-100 rounded-lg shadow dark:bg-gray-700"
         >
-          <ul class="py-2 font-medium" role="none">
+          <ul class="py-2 font-medium">
             <li
               v-for="(language, index) in languages"
               :key="index"
@@ -29,7 +29,6 @@
               <a
                 href="#"
                 class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-600 dark:hover:text-white"
-                role="menuitem"
               >
                 <div class="inline-flex items-center">
                   <span class="h-3.5 w-3.5 me-2">{{ language.flag }}</span>
@@ -45,12 +44,18 @@
 </template>
 
 <script>
-import { ref } from "vue";
+import { ref, inject } from "vue";
 import { useI18n } from "vue-i18n";
+import router from "../router/index.js";
 
 export default {
   name: "LanguageDropdown",
   setup() {
+    const isOpen = ref(false);
+    const toggleDropdown = () => {
+      isOpen.value = !isOpen.value;
+    };
+
     const { locale } = useI18n();
     const languages = ref([
       { code: "en", name: "English (US)", flag: "🇺🇸" },
@@ -59,30 +64,33 @@ export default {
       { code: "hr", name: "Hrvatski", flag: "🇭🇷" },
     ]);
 
-    const selectedLanguage = ref({
-      code: "en",
-      name: "English (US)",
-      flag: "🇺🇸",
-    });
+    const selectedLanguage = inject("selectedLanguage");
 
     const selectLanguage = (language) => {
-      // Update selected language
+      // close dropdown immediately
+      isOpen.value = false;
+
+      // set language in localStorage
+      localStorage.setItem("language", language.code);
+
+      // update reactive language objects
       selectedLanguage.value = language;
-
-      // Move the selected language to the top of the list
-      const index = languages.value.findIndex(
-        (lang) => lang.code === language.code
-      );
-      if (index > -1) {
-        const [selected] = languages.value.splice(index, 1);
-        languages.value.unshift(selected);
-      }
-
-      // Update app locale
       locale.value = language.code;
+
+      // keep the rest of the path, only replace the language segment
+      const currentPath = router.currentRoute.value.fullPath;
+      const parts = currentPath.split("/");
+      parts[1] = language.code;
+      const newPath = parts.join("/");
+      router.push(newPath).then(() => {
+        // refresh the page
+        window.location.reload();
+      });
     };
 
     return {
+      isOpen,
+      toggleDropdown,
       languages,
       selectedLanguage,
       selectLanguage,

@@ -13,10 +13,14 @@
     "@fortawesome/free-brands-svg-icons": "^6.7.1",
     "@fortawesome/free-solid-svg-icons": "^6.7.1",
     "@fortawesome/vue-fontawesome": "^3.0.8",
+    "@vueuse/head": "^2.0.0",
+    "aos": "^2.3.4",
+    "axios": "^1.7.9",
     "flowbite": "^2.5.2",
     "vue": "^3.5.13",
     "vue-easy-lightbox": "^1.19.0",
     "vue-i18n": "^10.0.5",
+    "vue-meta": "^2.4.0",
     "vue-router": "^4.0.13"
   },
   "devDependencies": {

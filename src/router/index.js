@@ -1,34 +1,43 @@
 import { createRouter, createWebHistory } from "vue-router";
+import { Auth } from "../services";
 import Home from "../views/Home.vue";
 import About from "../views/About.vue";
 import Properties from "../views/Properties.vue";
 import Property from "../views/Property.vue";
 import Login from "../views/Login.vue";
 import Admin from "../views/Admin.vue";
-import Agent from "../views/Agent.vue";
 
-const isAuthenticated = () => {
-  return localStorage.getItem("auth") === "true";
-};
+// Simple layout component
+import LangLayout from "../layouts/LangLayout.vue";
+
+const defaultLang = localStorage.getItem("language") || "hr";
 
 const routes = [
-  { path: "/", component: Home },
-  { path: "/about", component: About },
-  { path: "/properties", component: Properties },
+  { path: "/", redirect: `/${defaultLang}` },
+  {
+    path: "/:lang",
+    component: LangLayout,
+    children: [
+      { path: "", component: Home },
+      { path: "about", component: About },
+      { path: "properties", component: Properties },
+      {
+        path: "property/:id",
+        component: Property,
+        props: true,
+        name: "Property",
+      },
+    ],
+  },
+
   { path: "/login", component: Login },
   {
     path: "/admin",
     component: Admin,
-    meta: { requiresAuth: false } /* promijeniti u true */,
-  },
-  {
-    path: "/agent",
-    component: Agent,
-    meta: { requiresAuth: false } /* promijeniti u true */,
+    meta: { requiresAuth: true },
   },
 
-  // test ruta
-  { path: "/property", component: Property },
+  { path: "/:pathMatch(.*)*", redirect: `/${defaultLang}` },
 ];
 
 const router = createRouter({
@@ -37,11 +46,16 @@ const router = createRouter({
 });
 
 router.beforeEach((to, from, next) => {
-  if (to.meta.requiresAuth && !isAuthenticated()) {
-    next("/login");
-  } else {
-    next();
+  if (to.meta.requiresAuth) {
+    const user = Auth.getUser();
+    if (!user) {
+      return next("/login");
+    }
   }
+  if (to.params.lang) {
+    localStorage.setItem("language", to.params.lang);
+  }
+  next();
 });
 
 export default router;

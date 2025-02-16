@@ -1,50 +1,59 @@
 <template>
   <div
-    class="w-full max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700"
+    class="w-full max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 cursor-pointer"
+    @click="handleClick"
   >
     <a href="#">
       <img
-        class="rounded-t-lg"
-        src="https://via.placeholder.com/400x300"
+        class="rounded-t-lg w-full h-48 object-cover"
+        :src="firstImage"
         alt="Property image"
       />
     </a>
     <div class="px-5 py-3 pb-5">
       <a href="#">
         <h5
-          class="text-xl font-semibold tracking-tight text-gray-900 dark:text-white"
+          class="text-lg font-semibold tracking-tight text-gray-900 dark:text-white h-16 overflow-hidden"
         >
-          Beautiful Family House
+          {{ propertyName }}
         </h5>
       </a>
-      <p class="text-sm text-gray-600 dark:text-gray-400">Short description</p>
-      <div class="flex items-center mt-2.5 mb-5">
-        <button
-          class="text-gray-500 hover:text-red-500 focus:outline-none"
-          aria-label="Add to favorites"
-        >
-          <svg
-            class="w-6 h-6"
-            fill="currentColor"
-            viewBox="0 0 24 24"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              fill-rule="evenodd"
-              d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"
-              clip-rule="evenodd"
-            />
-          </svg>
-        </button>
+      <div class="flex gap-2 py-3 h-12">
         <span
-          class="bg-blue-100 text-blue-800 text-xs font-semibold px-2.5 py-0.5 rounded dark:bg-blue-200 dark:text-blue-800 ms-3"
+          v-if="amenities.bedrooms"
+          class="flex items-center justify-center p-2 rounded text-blue-600"
         >
-          4.5
+          <i class="fas fa-bed"></i> {{ amenities.bedrooms }}
+        </span>
+        <span
+          v-if="amenities.bathrooms"
+          class="flex items-center justify-center p-2 rounded text-green-600"
+        >
+          <i class="fas fa-bath"></i> {{ amenities.bathrooms }}
+        </span>
+        <span
+          v-if="amenities.parking"
+          class="flex items-center justify-center p-2 rounded text-yellow-600"
+        >
+          <i class="fas fa-car"></i>
+        </span>
+        <span
+          v-if="amenities.garage"
+          class="flex items-center justify-center p-2 rounded text-red-600"
+        >
+          <i class="fas fa-warehouse"></i>
+        </span>
+        <span
+          v-if="amenities.pool"
+          class="flex items-center justify-center p-2 rounded text-teal-600"
+        >
+          <i class="fas fa-swimming-pool"></i>
         </span>
       </div>
-      <div class="flex items-center justify-between">
+      <hr class="py-2" />
+      <div class="flex items-center justify-between h-12">
         <span class="text-3xl font-bold text-gray-900 dark:text-white">
-          350,000€
+          {{ formatPrice(post.price) }} €
         </span>
         <a
           href="#"
@@ -56,4 +65,49 @@
   </div>
 </template>
 
-<script setup></script>
+<script setup>
+import { inject, defineProps, computed, defineEmits } from "vue";
+
+const props = defineProps({
+  post: {
+    type: Object,
+    required: true,
+  },
+});
+
+const amenities = props.post.amenities;
+const emits = defineEmits(["card-click"]);
+
+const selectedLanguage = inject("selectedLanguage");
+
+const propertyName = computed(() => {
+  return (
+    props.post.propertyName?.[selectedLanguage.value.code] ||
+    props.post.propertyName?.["en"] ||
+    "Property Name Not Available"
+  );
+});
+
+const formatPrice = (value) => {
+  return new Intl.NumberFormat(selectedLanguage.value.code).format(value);
+};
+
+const firstImage = computed(() => {
+  return props.post.images && props.post.images.length > 0
+    ? props.post.images[0]
+    : "https://via.placeholder.com/400x300";
+});
+
+const handleClick = () => {
+  emits("card-click", props.post["_id"]);
+  console.log("Card clicked", props.post["_id"]);
+};
+</script>
+
+<style scoped>
+img {
+  width: 400px;
+  height: 300px;
+  object-fit: cover;
+}
+</style>
