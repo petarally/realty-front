@@ -6,7 +6,7 @@
       <div class="md:flex md:justify-between">
         <div class="mb-6 md:mb-0">
           <a href="/" class="flex items-center">
-            <img class="h-20" src="../assets/logo.png" alt="Istrian Villa" />
+            <img class="h-20" :src="logoSrc" alt="Realty Logo" />
           </a>
         </div>
 
@@ -75,9 +75,7 @@
       <div class="sm:flex sm:items-center sm:justify-between">
         <span class="text-sm text-gray-500 sm:text-center dark:text-gray-400"
           >© {{ new Date().getFullYear() }}
-          <a href="https://flowbite.com/" class="hover:underline"
-            >Istrian Villa</a
-          >
+          <a href="https://flowbite.com/" class="hover:underline">Realty</a>
         </span>
         <div class="flex mt-4 sm:justify-center sm:mt-0">
           <a
@@ -178,3 +176,8 @@
     </div>
   </footer>
 </template>
+
+<script setup>
+import { inject } from "vue";
+const logoSrc = inject("logoSrc");
+</script>

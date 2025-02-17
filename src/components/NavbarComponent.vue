@@ -7,16 +7,16 @@
       >
         <div class="flex space-x-4">
           <a
-            href="mailto:villaistrian@gmail.com"
+            href="mailto:info@realty.com"
             style="color: #c0c5d0"
             class="dark:text-gray-300 hover:text-gray-900 dark:hover:text-white flex items-center"
           >
-            <i class="fas fa-envelope mr-2"></i> villaistrian@gmail.com
+            <i class="fas fa-envelope mr-2"></i> info@realty.com
           </a>
         </div>
         <div class="flex space-x-4">
           <a
-            href="tel:+00385916002494"
+            href="tel:+38591870025"
             style="color: #c0c5d0"
             class="text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white flex items-center"
           >
@@ -33,7 +33,7 @@
         href="/"
         class="flex items-center justify-center space-x-3 rtl:space-x-reverse md:justify-start"
       >
-        <img src="../assets/logo.png" alt="istrian-villa-logo" class="w-40" />
+        <img :src="logoSrc" alt="realty-logo" class="w-40" />
       </a>
       <div
         class="flex items-center md:order-2 space-x-1 md:space-x-0 rtl:space-x-reverse"
@@ -137,12 +137,17 @@
 </template>
 
 <script setup>
-import { onMounted, nextTick } from "vue";
+import { ref, onMounted, nextTick, provide } from "vue";
 import { initFlowbite } from "flowbite";
 import { inject } from "vue";
 import LanguageDropdown from "./LanguageDropdown.vue";
 
+// Import logo images
+import realtyLogo from "../assets/realty_logo.png";
+import realtyLogoDark from "../assets/realty_logo_dark.png";
+
 const selectedLanguage = inject("selectedLanguage");
+const logoSrc = ref(realtyLogo);
 
 onMounted(async () => {
   await nextTick();
@@ -158,8 +163,10 @@ onMounted(async () => {
       window.matchMedia("(prefers-color-scheme: dark)").matches)
   ) {
     themeToggleLightIcon.classList.remove("hidden");
+    logoSrc.value = realtyLogoDark;
   } else {
     themeToggleDarkIcon.classList.remove("hidden");
+    logoSrc.value = realtyLogo;
   }
 
   var themeToggleBtn = document.getElementById("theme-toggle");
@@ -172,19 +179,24 @@ onMounted(async () => {
       if (localStorage.getItem("color-theme") === "light") {
         document.documentElement.classList.add("dark");
         localStorage.setItem("color-theme", "dark");
+        logoSrc.value = realtyLogoDark;
       } else {
         document.documentElement.classList.remove("dark");
         localStorage.setItem("color-theme", "light");
+        logoSrc.value = realtyLogo;
       }
     } else {
       if (document.documentElement.classList.contains("dark")) {
         document.documentElement.classList.remove("dark");
         localStorage.setItem("color-theme", "light");
+        logoSrc.value = realtyLogo;
       } else {
         document.documentElement.classList.add("dark");
         localStorage.setItem("color-theme", "dark");
+        logoSrc.value = realtyLogoDark;
       }
     }
   });
 });
+provide("logoSrc", logoSrc);
 </script>
