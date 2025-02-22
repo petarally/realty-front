@@ -1,7 +1,17 @@
 {
-  "home": "Home",
-  "about": "About",
-  "properties": "Properties",
+  "navbar_pages": {
+    "home": "Home",
+    "about": "About",
+    "properties": "Properties"
+  },
+  "about_description": "At Realty, we are dedicated to helping you find your dream home. Whether you are buying, selling, or renting, our team of experts is here to guide you every step of the way.",
+  "our_mission": "Our Mission",
+  "mission_description": "Our mission is to provide seamless and transparent real estate services, ensuring that every client experiences a smooth and stress-free property transaction.",
+  "meet_our_team": "Meet Our Team",
+  "team_description": "Our team consists of experienced real estate professionals who are passionate about helping you navigate the market. With years of expertise, we ensure you receive the best service possible.",
+  "about_us": "About Us",
+  "price_low_high": "Price: Low to High",
+  "price_high_low": "Price: High to Low",
   "location": "Location",
   "property_type": "Property Type",
   "max_price": "Maximum Price",

@@ -22,7 +22,9 @@ onMounted(async () => {
 </script>
 
 <template>
-  <nav class="bg-white border-gray-200 dark:bg-gray-900 shadow-md">
+  <nav
+    class="bg-white border-gray-200 dark:bg-gray-900 shadow-md fixed top-0 left-0 w-full z-50"
+  >
     <div class="max-w-screen-xl flex items-center justify-between mx-auto p-4">
       <!-- Logo -->
       <a href="/" class="flex items-center">
@@ -56,21 +58,21 @@ onMounted(async () => {
           class="block py-2 px-3 rounded-md hover:bg-gray-100 dark:hover:bg-gray-700"
           exact-active-class="text-blue-700 dark:text-blue-500"
         >
-          {{ $t("home") }}
+          {{ $t("navbar_pages.home") }}
         </router-link>
         <router-link
           :to="`${baseRoute}/about`"
           class="block py-2 px-3 rounded-md hover:bg-gray-100 dark:hover:bg-gray-700"
           active-class="text-blue-700 dark:text-blue-500"
         >
-          {{ $t("about") }}
+          {{ $t("navbar_pages.about") }}
         </router-link>
         <router-link
           :to="`${baseRoute}/properties`"
           class="block py-2 px-3 rounded-md hover:bg-gray-100 dark:hover:bg-gray-700"
           active-class="text-blue-700 dark:text-blue-500"
         >
-          {{ $t("properties") }}
+          {{ $t("navbar_pages.properties") }}
         </router-link>
       </div>
 

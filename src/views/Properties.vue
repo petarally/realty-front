@@ -1,9 +1,15 @@
 <template>
   <div>
     <Navbar />
-    <div class="px-4 md:px-8 lg:px-12 xl:px-16 mt-12">
-      <div class="flex justify-between items-center mb-4">
-        <h1 class="text-2xl font-bold">{{ $t("all_properties") }}</h1>
+    <div class="px-4 md:px-8 lg:px-12 xl:px-16 mt-12 pt-24">
+      <h2
+        data-aos="fade-right"
+        class="text-2xl font-semibold text-[#556dac] mb-4"
+      >
+        {{ $t("all_properties").toUpperCase() }}
+      </h2>
+      <hr data-aos="fade-right" class="border-t border-black w-96 my-4 mb-8" />
+      <div class="flex justify-end items-center mb-4">
         <div class="flex space-x-4">
           <select
             id="sort"
@@ -11,8 +17,8 @@
             @change="sortProperties"
             class="block w-full px-3 py-2 text-sm border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
           >
-            <option value="price-asc">Price: Low to High</option>
-            <option value="price-desc">Price: High to Low</option>
+            <option value="price-asc">{{ $t("price_low_high") }}</option>
+            <option value="price-desc">{{ $t("price_high_low") }}</option>
           </select>
         </div>
       </div>

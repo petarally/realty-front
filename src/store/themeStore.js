@@ -4,7 +4,7 @@ import realtyLogoDark from "../assets/realty_logo_dark.png";
 
 export const useThemeStore = defineStore("theme", {
   state: () => ({
-    theme: "light", // Default value, will be updated in setInitialTheme
+    theme: "light",
     logoSrc: realtyLogo,
   }),
   actions: {

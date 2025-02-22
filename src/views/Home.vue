@@ -1,7 +1,7 @@
 <template>
   <div>
     <Navbar />
-    <div class="px-4 md:px-8 lg:px-12 xl:px-16">
+    <div class="px-4 md:px-8 lg:px-12 xl:px-16 pt-20">
       <h1
         class="text-4xl font-bold text-center my-8 text-gray-900 dark:text-white"
       >

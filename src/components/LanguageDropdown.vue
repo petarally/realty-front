@@ -1,21 +1,24 @@
 <script setup>
-import { ref, inject } from "vue";
+import { ref, onMounted } from "vue";
 import { onClickOutside } from "@vueuse/core";
 import { useI18n } from "vue-i18n";
 import router from "../router/index.js";
 
+// Dropdown state
 const isOpen = ref(false);
 const dropdownRef = ref(null);
 
+// Toggle the dropdown visibility
 const toggleDropdown = () => {
   isOpen.value = !isOpen.value;
 };
 
+// Close the dropdown when clicking outside
 onClickOutside(dropdownRef, () => {
   isOpen.value = false;
 });
 
-const { locale } = useI18n();
+// Available languages
 const languages = ref([
   { code: "en", name: "English (US)", flag: "🇺🇸" },
   { code: "de", name: "Deutsch", flag: "🇩🇪" },
@@ -23,21 +26,50 @@ const languages = ref([
   { code: "hr", name: "Hrvatski", flag: "🇭🇷" },
 ]);
 
-const selectedLanguage = inject("selectedLanguage");
+// Get the current language from localStorage or fallback to 'hr' (Croatian)
+const savedLanguageCode = localStorage.getItem("language") || "hr";
+const selectedLanguage = ref(
+  languages.value.find((lang) => lang.code === savedLanguageCode) ||
+    languages.value[0] // Default to first language if no match
+);
 
+// i18n locale binding
+const { locale } = useI18n();
+
+// Select language and update the app accordingly
 const selectLanguage = (language) => {
-  isOpen.value = false;
-  localStorage.setItem("language", language.code);
-  selectedLanguage.value = language;
-  locale.value = language.code;
+  isOpen.value = false; // Close the dropdown
+  localStorage.setItem("language", language.code); // Store the selected language in localStorage
+  selectedLanguage.value = language; // Update the selected language
+  locale.value = language.code; // Update the i18n locale
 
+  // Update the route with the new language and refresh the page
   const currentPath = router.currentRoute.value.fullPath;
   const parts = currentPath.split("/");
-  parts[1] = language.code;
+  parts[1] = language.code; // Update the path with the new language code
   router.push(parts.join("/")).then(() => {
-    window.location.reload();
+    window.location.reload(); // Refresh the page with the new language
   });
 };
+
+// Optionally, onMounted to ensure default selection if no language was set
+onMounted(() => {
+  // Set default language to Croatian if not set
+  if (!localStorage.getItem("language")) {
+    localStorage.setItem("language", "hr"); // Default to Croatian
+  }
+
+  // Get the current language from localStorage
+  const savedLanguageCode = localStorage.getItem("language");
+
+  // Find the language from the available languages or default to the first one
+  selectedLanguage.value =
+    languages.value.find((lang) => lang.code === savedLanguageCode) ||
+    languages.value[0]; // Default to first language if no match
+
+  // Set the locale for i18n
+  locale.value = selectedLanguage.value.code;
+});
 </script>
 
 <template>
