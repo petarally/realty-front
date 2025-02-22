@@ -16,6 +16,7 @@ const routes = [
   // Redirect '/' to '/:lang' (i.e., homepage for default language)
   { path: "/", redirect: `/${defaultLang}` },
 
+  // Language-specific routes
   {
     path: "/:lang",
     component: LangLayout,
@@ -45,22 +46,24 @@ const routes = [
         props: true,
         meta: { titleKey: "navbar_pages.property" },
       },
-      {
-        path: "login",
-        name: "Login",
-        component: Login,
-        meta: { titleKey: "navbar_pages.login" },
-      },
-      {
-        path: "admin",
-        name: "Admin",
-        component: Admin,
-        meta: {
-          requiresAuth: true,
-          titleKey: "navbar_pages.admin",
-        },
-      },
     ],
+  },
+
+  // Login route (should not require a language prefix)
+  {
+    path: "/login",
+    name: "Login",
+    component: Login,
+  },
+
+  // Admin route (requires authentication)
+  {
+    path: "/admin",
+    name: "Admin",
+    component: Admin,
+    meta: {
+      requiresAuth: true,
+    },
   },
 
   // 404 route
@@ -82,13 +85,20 @@ router.beforeEach((to, from, next) => {
   const pageTitle = to.meta.titleKey ? i18n.global.t(to.meta.titleKey) : "";
   document.title = pageTitle ? `${baseTitle} | ${pageTitle}` : baseTitle;
 
+  // Handle authentication for routes that require it
   if (to.meta.requiresAuth) {
     const user = Auth.getUser();
     if (!user) {
       return next({ name: "Login", query: { redirect: to.fullPath } });
     }
+
+    // Check if the user is an admin and redirect to Admin if they are
+    if (user.role === "admin" && to.name !== "Admin") {
+      return next({ name: "Admin" });
+    }
   }
 
+  // Set language
   if (to.params.lang) {
     const supportedLanguages = ["en", "de", "it", "hr"];
     if (!supportedLanguages.includes(to.params.lang)) {
