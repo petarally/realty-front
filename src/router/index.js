@@ -1,4 +1,5 @@
 import { createRouter, createWebHistory } from "vue-router";
+import i18n from "../i18n";
 import { Auth } from "../services";
 import Home from "../views/Home.vue";
 import About from "../views/About.vue";
@@ -6,38 +7,69 @@ import Properties from "../views/Properties.vue";
 import Property from "../views/Property.vue";
 import Login from "../views/Login.vue";
 import Admin from "../views/Admin.vue";
-
-// Simple layout component
+import NotFound from "../views/NotFound.vue";
 import LangLayout from "../layouts/LangLayout.vue";
 
 const defaultLang = localStorage.getItem("language") || "hr";
 
 const routes = [
+  // Redirect '/' to '/:lang' (i.e., homepage for default language)
   { path: "/", redirect: `/${defaultLang}` },
+
   {
     path: "/:lang",
     component: LangLayout,
     children: [
-      { path: "", component: Home },
-      { path: "about", component: About },
-      { path: "properties", component: Properties },
+      {
+        path: "",
+        name: "Home",
+        component: Home,
+        meta: { titleKey: "navbar_pages.home" },
+      },
+      {
+        path: "about",
+        name: "About",
+        component: About,
+        meta: { titleKey: "navbar_pages.about" },
+      },
+      {
+        path: "properties",
+        name: "Properties",
+        component: Properties,
+        meta: { titleKey: "navbar_pages.properties" },
+      },
       {
         path: "property/:id",
+        name: "Property",
         component: Property,
         props: true,
-        name: "Property",
+        meta: { titleKey: "navbar_pages.property" },
+      },
+      {
+        path: "login",
+        name: "Login",
+        component: Login,
+        meta: { titleKey: "navbar_pages.login" },
+      },
+      {
+        path: "admin",
+        name: "Admin",
+        component: Admin,
+        meta: {
+          requiresAuth: true,
+          titleKey: "navbar_pages.admin",
+        },
       },
     ],
   },
 
-  { path: "/login", component: Login },
+  // 404 route
   {
-    path: "/admin",
-    component: Admin,
-    meta: { requiresAuth: true },
+    path: "/:pathMatch(.*)*",
+    name: "NotFound",
+    component: NotFound,
+    meta: { titleKey: "error.not_found" },
   },
-
-  { path: "/:pathMatch(.*)*", redirect: `/${defaultLang}` },
 ];
 
 const router = createRouter({
@@ -46,15 +78,26 @@ const router = createRouter({
 });
 
 router.beforeEach((to, from, next) => {
+  const baseTitle = "Realty";
+  const pageTitle = to.meta.titleKey ? i18n.global.t(to.meta.titleKey) : "";
+  document.title = pageTitle ? `${baseTitle} | ${pageTitle}` : baseTitle;
+
   if (to.meta.requiresAuth) {
     const user = Auth.getUser();
     if (!user) {
-      return next("/login");
+      return next({ name: "Login", query: { redirect: to.fullPath } });
     }
   }
+
   if (to.params.lang) {
+    const supportedLanguages = ["en", "de", "it", "hr"];
+    if (!supportedLanguages.includes(to.params.lang)) {
+      return next(`/${defaultLang}`);
+    }
     localStorage.setItem("language", to.params.lang);
+    i18n.global.locale = to.params.lang;
   }
+
   next();
 });
 

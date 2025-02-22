@@ -4,6 +4,11 @@
     "about": "Chi siamo",
     "properties": "Proprietà"
   },
+  "error": {
+    "not_found": "Pagina non trovata",
+    "page_not_found": "La pagina che stai cercando non esiste.",
+    "back_home": "Torna alla home"
+  },
   "about_us": "Chi siamo",
   "about_description": "Noi di Realty ci dedichiamo ad aiutarti a trovare la casa dei tuoi sogni. Che tu stia comprando, vendendo o affittando, il nostro team di esperti è al tuo fianco in ogni fase.",
   "our_mission": "La nostra missione",

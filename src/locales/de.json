@@ -4,6 +4,11 @@
     "about": "Über uns",
     "properties": "Immobilien"
   },
+  "error": {
+    "not_found": "Seite nicht gefunden",
+    "page_not_found": "Die gesuchte Seite existiert nicht.",
+    "back_home": "Zurück zur Startseite"
+  },
   "about_us": "Über uns",
   "about_description": "Bei Realty helfen wir Ihnen, Ihr Traumhaus zu finden. Egal, ob Sie kaufen, verkaufen oder mieten möchten – unser Expertenteam begleitet Sie auf jedem Schritt.",
   "our_mission": "Unsere Mission",

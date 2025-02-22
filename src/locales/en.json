@@ -4,6 +4,11 @@
     "about": "About",
     "properties": "Properties"
   },
+  "error": {
+    "not_found": "Page Not Found",
+    "page_not_found": "The page you're looking for doesn't exist.",
+    "back_home": "Back to Home"
+  },
   "about_description": "At Realty, we are dedicated to helping you find your dream home. Whether you are buying, selling, or renting, our team of experts is here to guide you every step of the way.",
   "our_mission": "Our Mission",
   "mission_description": "Our mission is to provide seamless and transparent real estate services, ensuring that every client experiences a smooth and stress-free property transaction.",

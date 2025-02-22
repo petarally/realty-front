@@ -4,6 +4,11 @@
     "about": "O nama",
     "properties": "Nekretnine"
   },
+  "error": {
+    "not_found": "Stranica nije pronađena",
+    "page_not_found": "Stranica koju tražite ne postoji.",
+    "back_home": "Natrag na početnu"
+  },
   "about_us": "O nama",
   "about_description": "U Realtyju smo posvećeni tome da vam pomognemo pronaći dom iz snova. Bilo da kupujete, prodajete ili iznajmljujete, naš stručni tim vas vodi kroz svaki korak.",
   "our_mission": "Naša misija",
