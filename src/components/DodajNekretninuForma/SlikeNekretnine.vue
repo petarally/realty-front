@@ -56,7 +56,7 @@
 </template>
 
 <script setup>
-import { defineProps, toRefs } from "vue";
+import { defineProps, defineEmits } from "vue";
 
 // Define props
 const props = defineProps({
@@ -70,8 +70,16 @@ const props = defineProps({
   },
 });
 
-// Create local references to the modelValue and imagePreviews props
-const { modelValue, imagePreviews } = toRefs(props);
+// Define emit events
+const emit = defineEmits([
+  "update:images",
+  "update:imagePreviews",
+  "previewImage",
+  "handleDrop",
+  "handleDragOver",
+]);
+
+const { modelValue, imagePreviews } = props;
 
 // Convert image to WebP format and resize it
 const convertImageToWebP = async (file, maxWidth, maxHeight) => {
@@ -126,20 +134,20 @@ const dataUrlToBlob = (dataUrl) => {
   return new Blob([u8arr], { type: mime });
 };
 
-// Handle image preview, drag-and-drop, and other events
 const previewImage = async (event, index) => {
   const file = event.target.files?.[0];
   if (file) {
     try {
-      // Convert to WebP and resize
       const webpImage = await convertImageToWebP(file, 800, 800);
 
       const reader = new FileReader();
       reader.onload = (e) => {
-        imagePreviews.value[index] = e.target?.result;
+        imagePreviews[index] = e.target?.result;
+        emit("update:imagePreviews", [...imagePreviews]);
       };
       reader.readAsDataURL(webpImage);
-      modelValue.value[index] = webpImage;
+      modelValue[index] = webpImage;
+      emit("update:images", [...modelValue]);
     } catch (error) {
       console.error("Error processing image: ", error);
     }
@@ -155,10 +163,12 @@ const handleDrop = async (event, index) => {
 
       const reader = new FileReader();
       reader.onload = (e) => {
-        imagePreviews.value[index] = e.target?.result;
+        imagePreviews[index] = e.target?.result;
+        emit("update:imagePreviews", [...imagePreviews]);
       };
       reader.readAsDataURL(webpImage);
-      modelValue.value[index] = webpImage;
+      modelValue[index] = webpImage;
+      emit("update:images", [...modelValue]);
     } catch (error) {
       console.error("Error processing image: ", error);
     }
@@ -169,16 +179,3 @@ const handleDragOver = (event) => {
   event.preventDefault();
 };
 </script>
-
-<style scoped>
-.image-dropzone {
-  height: 200px;
-}
-
-.image-dropzone img {
-  max-width: 100%;
-  max-height: 100%;
-  object-fit: cover;
-  image-rendering: crisp-edges;
-}
-</style>

@@ -5,7 +5,7 @@
       <label class="inline-flex items-center">
         <input
           type="checkbox"
-          v-model="amenities.wifi"
+          v-model="modelValue.wifi"
           class="form-checkbox h-5 w-5 text-blue-600"
         />
         <span class="ml-2">Wi-Fi</span>
@@ -13,7 +13,7 @@
       <label class="inline-flex items-center">
         <input
           type="checkbox"
-          v-model="amenities.parking"
+          v-model="modelValue.parking"
           class="form-checkbox h-5 w-5 text-blue-600"
         />
         <span class="ml-2">Parking</span>
@@ -21,7 +21,7 @@
       <label class="inline-flex items-center">
         <input
           type="checkbox"
-          v-model="amenities.pool"
+          v-model="modelValue.pool"
           class="form-checkbox h-5 w-5 text-blue-600"
         />
         <span class="ml-2">Bazen</span>
@@ -29,7 +29,7 @@
       <label class="inline-flex items-center">
         <input
           type="checkbox"
-          v-model="amenities.garage"
+          v-model="modelValue.garage"
           class="form-checkbox h-5 w-5 text-blue-600"
         />
         <span class="ml-2">Garaža</span>
@@ -37,7 +37,7 @@
       <label class="inline-flex items-center">
         <input
           type="checkbox"
-          v-model="amenities.seaView"
+          v-model="modelValue.seaView"
           class="form-checkbox h-5 w-5 text-blue-600"
         />
         <span class="ml-2">Pogled more</span>
@@ -45,7 +45,7 @@
       <label class="inline-flex items-center">
         <input
           type="checkbox"
-          v-model="amenities.accessToBeach"
+          v-model="modelValue.accessToBeach"
           class="form-checkbox h-5 w-5 text-blue-600"
         />
         <span class="ml-2">Prilaz plaži</span>
@@ -53,7 +53,7 @@
       <label class="inline-flex items-center">
         <input
           type="checkbox"
-          v-model="amenities.septicTank"
+          v-model="modelValue.septicTank"
           class="form-checkbox h-5 w-5 text-blue-600"
         />
         <span class="ml-2">Septička</span>
@@ -61,7 +61,7 @@
       <label class="inline-flex items-center">
         <input
           type="checkbox"
-          v-model="amenities.sewageSystem"
+          v-model="modelValue.sewageSystem"
           class="form-checkbox h-5 w-5 text-blue-600"
         />
         <span class="ml-2">Kanalizacija</span>
@@ -71,25 +71,21 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
-import { defineProps } from "vue";
-
-const amenities = ref({
-  wifi: false,
-  parking: false,
-  pool: false,
-  garage: false,
-  seaView: false,
-  accessToBeach: false,
-  septicTank: false,
-  sewageSystem: false,
-});
+import { defineProps, defineEmits } from "vue";
 
 // Define props
 const props = defineProps({
-  amenities: {
+  modelValue: {
     type: Object,
     required: true,
   },
 });
+
+// Define emits
+const emit = defineEmits(["update:modelValue"]);
+
+// Emit updates when the value changes
+const updateAmenities = () => {
+  emit("update:modelValue", props.modelValue);
+};
 </script>

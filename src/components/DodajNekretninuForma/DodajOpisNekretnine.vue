@@ -1,77 +1,38 @@
 <template>
   <div class="mb-4">
+    <!-- Language Selection Buttons -->
     <div class="flex mb-2 language-buttons">
       <button
+        v-for="lang in languages"
+        :key="lang"
         type="button"
-        @click="updateDescriptionLanguage('hr')"
-        :class="{ active: descriptionLanguage === 'hr' }"
-        class="py-2 px-4 rounded-l"
+        @click="currentLanguage = lang"
+        :class="{
+          active: currentLanguage === lang,
+          'rounded-l': lang === 'hr',
+          'rounded-r': lang === 'de',
+          'py-2 px-4': true,
+        }"
       >
-        HR
-      </button>
-      <button
-        type="button"
-        @click="updateDescriptionLanguage('en')"
-        :class="{ active: descriptionLanguage === 'en' }"
-        class="py-2 px-4"
-      >
-        EN
-      </button>
-      <button
-        type="button"
-        @click="updateDescriptionLanguage('it')"
-        :class="{ active: descriptionLanguage === 'it' }"
-        class="py-2 px-4"
-      >
-        IT
-      </button>
-      <button
-        type="button"
-        @click="updateDescriptionLanguage('de')"
-        :class="{ active: descriptionLanguage === 'de' }"
-        class="py-2 px-4 rounded-r"
-      >
-        DE
+        {{ lang.toUpperCase() }}
       </button>
     </div>
 
-    <!-- Description Input Fields -->
+    <!-- Property Description Input -->
     <div class="relative mb-4">
       <textarea
-        v-if="descriptionLanguage === 'hr'"
-        v-model="localDescription.hr"
-        @input="updateDescription"
-        placeholder="Opis nekretnine"
+        v-model="propertyDescription[currentLanguage]"
+        :placeholder="placeholders[currentLanguage]"
         class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-      ></textarea>
-      <textarea
-        v-if="descriptionLanguage === 'en'"
-        v-model="localDescription.en"
-        @input="updateDescription"
-        placeholder="Property description"
-        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-      ></textarea>
-      <textarea
-        v-if="descriptionLanguage === 'it'"
-        v-model="localDescription.it"
-        @input="updateDescription"
-        placeholder="Descrizione della proprietà"
-        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-      ></textarea>
-      <textarea
-        v-if="descriptionLanguage === 'de'"
-        v-model="localDescription.de"
-        @input="updateDescription"
-        placeholder="Immobilienbeschreibung"
-        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-      ></textarea>
+      />
     </div>
   </div>
 </template>
 
 <script setup>
-import { ref, toRefs, watch } from "vue";
+import { ref, computed } from "vue";
 import { defineProps, defineEmits } from "vue";
+import axios from "../../axios"; // Keep if translation API is used
 
 // Define props
 const props = defineProps({
@@ -79,40 +40,49 @@ const props = defineProps({
     type: Object,
     required: true,
   },
-  descriptionLanguage: {
-    type: String,
-    required: true,
-  },
 });
 
-// Define emits
-const emit = defineEmits(["update:modelValue", "update:descriptionLanguage"]);
+// Emit function to update the parent component
+const emit = defineEmits(["update:modelValue"]);
 
-// Create local references to the props
-const { modelValue, descriptionLanguage } = toRefs(props);
+// Local state
+const currentLanguage = ref("hr");
+const languages = ["hr", "en", "it", "de"];
 
-// Local state for description
-const localDescription = ref({ ...modelValue.value });
-
-// Watch for changes in modelValue and update localDescription
-watch(modelValue, (newValue) => {
-  localDescription.value = { ...newValue };
-});
-
-// Emit updates to the parent component
-const updateDescription = () => {
-  emit("update:modelValue", localDescription.value);
+// Localized placeholders for input fields
+const placeholders = {
+  hr: "Opis nekretnine",
+  en: "Property description",
+  it: "Descrizione della proprietà",
+  de: "Beschreibung der Immobilie",
 };
 
-const updateDescriptionLanguage = (language) => {
-  emit("update:descriptionLanguage", language);
+// Computed property to sync with parent modelValue
+const propertyDescription = computed({
+  get: () => props.modelValue,
+  set: (newValue) => emit("update:modelValue", newValue),
+});
+
+// Translation function
+const translatePropertyName = async () => {
+  try {
+    const requestData = {
+      text: propertyName.value[currentLanguage.value], // Get current text
+      targetLang: currentLanguage.value, // Target language
+    };
+
+    const response = await axios.post("/translate", requestData);
+    propertyDescription.value[currentLanguage.value] =
+      response.data.translatedText;
+  } catch (error) {
+    console.error("Translation failed", error);
+  }
 };
 </script>
 
 <style scoped>
 .language-buttons {
   display: flex;
-  margin-bottom: 1rem;
 }
 
 .language-buttons button {

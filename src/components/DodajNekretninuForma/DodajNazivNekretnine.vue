@@ -1,63 +1,28 @@
 <template>
   <div class="mb-4">
+    <!-- Language Selection Buttons -->
     <div class="flex mb-2 language-buttons">
       <button
+        v-for="lang in languages"
+        :key="lang"
         type="button"
-        @click="currentLanguage = 'hr'"
-        :class="{ active: currentLanguage === 'hr' }"
-        class="py-2 px-4 rounded-l"
+        @click="currentLanguage = lang"
+        :class="{
+          active: currentLanguage === lang,
+          'rounded-l': lang === 'hr',
+          'rounded-r': lang === 'de',
+          'py-2 px-4': true,
+        }"
       >
-        HR
-      </button>
-      <button
-        type="button"
-        @click="currentLanguage = 'en'"
-        :class="{ active: currentLanguage === 'en' }"
-        class="py-2 px-4"
-      >
-        EN
-      </button>
-      <button
-        type="button"
-        @click="currentLanguage = 'it'"
-        :class="{ active: currentLanguage === 'it' }"
-        class="py-2 px-4"
-      >
-        IT
-      </button>
-      <button
-        type="button"
-        @click="currentLanguage = 'de'"
-        :class="{ active: currentLanguage === 'de' }"
-        class="py-2 px-4 rounded-r"
-      >
-        DE
+        {{ lang.toUpperCase() }}
       </button>
     </div>
-    <!-- Property Name Input Fields -->
+
+    <!-- Property Name Input -->
     <div class="relative mb-4">
       <input
-        v-if="currentLanguage === 'hr'"
-        v-model="propertyName.hr"
-        placeholder="Naziv nekretnine"
-        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-      />
-      <input
-        v-if="currentLanguage === 'en'"
-        v-model="propertyName.en"
-        placeholder="Enter property name"
-        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-      />
-      <input
-        v-if="currentLanguage === 'it'"
-        v-model="propertyName.it"
-        placeholder="Nome della proprietà"
-        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-      />
-      <input
-        v-if="currentLanguage === 'de'"
-        v-model="propertyName.de"
-        placeholder="Name der Immobilie"
+        v-model="propertyName[currentLanguage]"
+        :placeholder="placeholders[currentLanguage]"
         class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
       />
     </div>
@@ -65,9 +30,9 @@
 </template>
 
 <script setup>
-import { ref, toRefs, computed } from "vue";
-import { defineProps } from "vue";
-import axios from "../../axios";
+import { ref, computed } from "vue";
+import { defineProps, defineEmits } from "vue";
+import axios from "../../axios"; // Keep if translation API is used
 
 // Define props
 const props = defineProps({
@@ -77,28 +42,34 @@ const props = defineProps({
   },
 });
 
-// Create a local reference to the modelValue prop
-const { modelValue } = toRefs(props);
+// Emit function to update the parent component
+const emit = defineEmits(["update:modelValue"]);
 
-// Define local state
+// Local state
 const currentLanguage = ref("hr");
+const languages = ["hr", "en", "it", "de"];
 
-// Create a computed property to bind the modelValue to the local state
+// Localized placeholders for input fields
+const placeholders = {
+  hr: "Naziv nekretnine",
+  en: "Enter property name",
+  it: "Nome della proprietà",
+  de: "Name der Immobilie",
+};
+
+// Computed property to sync with parent modelValue
 const propertyName = computed({
-  get: () => modelValue.value,
-  set: (value) => {
-    modelValue.value = value;
-  },
+  get: () => props.modelValue,
+  set: (newValue) => emit("update:modelValue", newValue),
 });
 
+// Translation function
 const translatePropertyName = async () => {
   try {
     const requestData = {
-      text: propertyName.value[currentLanguage.value],
-      targetLang: currentLanguage.value,
+      text: propertyName.value[currentLanguage.value], // Get current text
+      targetLang: currentLanguage.value, // Target language
     };
-
-    console.log("Request data:", requestData); // Debugging line
 
     const response = await axios.post("/translate", requestData);
     propertyName.value[currentLanguage.value] = response.data.translatedText;
@@ -111,7 +82,6 @@ const translatePropertyName = async () => {
 <style scoped>
 .language-buttons {
   display: flex;
-  margin-bottom: 1rem;
 }
 
 .language-buttons button {
