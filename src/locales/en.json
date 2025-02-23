@@ -42,5 +42,8 @@
     "wifi": "WiFi"
   },
   "cookie_message": "This website uses cookies to provide you with the best possible experience.",
-  "accept": "Accept"
+  "accept": "Accept",
+  "davor_role": "Owner",
+  "ivana_role": "Owner / Marketing Lead",
+  "lorena_role": "Agent"
 }

@@ -22,14 +22,15 @@ let Auth = {
       });
       console.log("Login response:", response); // Provjeri cijeli odgovor
       let user = response.data;
+      console.log(user.role);
       localStorage.setItem("user", JSON.stringify(user));
-      return true;
+      return user;
     } catch (error) {
       console.error("Login failed:", error.response); // Ispravno logiranje greške
       if (error.response) {
         console.log("Error message:", error.response.data.error); // Dodatni ispis poruke greške
       }
-      return false;
+      return null;
     }
   },
   logout() {

@@ -15,17 +15,10 @@
         </p>
       </section>
 
-      <!-- Hero Image -->
-      <div class="my-8 flex justify-center">
-        <img
-          src="https://via.placeholder.com/1200x500"
-          alt="Real Estate"
-          class="rounded-lg shadow-lg w-full max-w-4xl"
-        />
-      </div>
-
       <!-- Our Mission -->
-      <section class="my-16 grid md:grid-cols-2 gap-8 items-center">
+      <section
+        class="my-16 grid md:grid-cols-2 gap-8 items-center bg-gray-100 dark:bg-gray-800 p-8 rounded-lg"
+      >
         <div>
           <h2 class="text-3xl font-semibold text-gray-900 dark:text-white">
             {{ $t("our_mission") }}
@@ -35,8 +28,8 @@
           </p>
         </div>
         <img
-          src="https://via.placeholder.com/500x300"
-          alt="Mission"
+          src="../assets/office.jpg"
+          alt="office"
           class="rounded-lg shadow-lg w-full"
         />
       </section>
@@ -52,41 +45,41 @@
         <div class="grid md:grid-cols-3 gap-8">
           <div class="text-center">
             <img
-              src="https://via.placeholder.com/150"
-              alt="Team Member"
-              class="rounded-full mx-auto shadow-md"
+              src="../assets/davor.jpg"
+              alt="Davor"
+              class="rounded-full mx-auto shadow-md h-80"
             />
             <h3 class="text-xl font-medium mt-4 text-gray-900 dark:text-white">
-              {{ $t("team_member_1") }}
+              Davor Dadić
             </h3>
             <p class="text-gray-600 dark:text-gray-400">
-              {{ $t("team_role_1") }}
+              {{ $t("davor_role") }}
             </p>
           </div>
           <div class="text-center">
             <img
-              src="https://via.placeholder.com/150"
-              alt="Team Member"
-              class="rounded-full mx-auto shadow-md"
+              src="../assets/ivana.jpg"
+              alt="Ivana"
+              class="rounded-full mx-auto shadow-md h-80"
             />
             <h3 class="text-xl font-medium mt-4 text-gray-900 dark:text-white">
-              {{ $t("team_member_2") }}
+              Ivana Dadić
             </h3>
             <p class="text-gray-600 dark:text-gray-400">
-              {{ $t("team_role_2") }}
+              {{ $t("ivana_role") }}
             </p>
           </div>
           <div class="text-center">
             <img
-              src="https://via.placeholder.com/150"
-              alt="Team Member"
-              class="rounded-full mx-auto shadow-md"
+              src="../assets/lorena.jpg"
+              alt="Lorena"
+              class="rounded-full mx-auto shadow-md h-80"
             />
             <h3 class="text-xl font-medium mt-4 text-gray-900 dark:text-white">
-              {{ $t("team_member_3") }}
+              Lorena Tadić
             </h3>
             <p class="text-gray-600 dark:text-gray-400">
-              {{ $t("team_role_3") }}
+              {{ $t("lorena_role") }}
             </p>
           </div>
         </div>

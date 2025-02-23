@@ -67,13 +67,18 @@ const error = ref("");
 const login = async () => {
   console.log(email.value, password.value);
   try {
-    let success = await Auth.login(email.value, password.value);
+    let user = await Auth.login(email.value, password.value);
 
-    if (success === true) {
-      router.push({ path: "/admin" }).then(() => location.reload());
+    if (user && user.role) {
+      if (user.role === "admin") {
+        router.push({ path: "/admin" }).then(() => location.reload());
+      } else if (user.role === "agent") {
+        router.push({ path: "/agent" }).then(() => location.reload());
+      } else {
+        error.value = "Unauthorized role.";
+      }
     } else {
       error.value = "Login failed. Please check your credentials.";
-      console.log(success);
     }
   } catch (err) {
     error.value = "An error occurred during login.";

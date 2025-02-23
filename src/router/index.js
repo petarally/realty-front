@@ -7,6 +7,7 @@ import Properties from "../views/Properties.vue";
 import Property from "../views/Property.vue";
 import Login from "../views/Login.vue";
 import Admin from "../views/Admin.vue";
+import Agent from "../views/Agent.vue";
 import NotFound from "../views/NotFound.vue";
 import LangLayout from "../layouts/LangLayout.vue";
 
@@ -65,6 +66,14 @@ const routes = [
       requiresAuth: true,
     },
   },
+  {
+    path: "/agent",
+    name: "Agent",
+    component: Agent,
+    meta: {
+      requiresAuth: true,
+    },
+  },
 
   // 404 route
   {
@@ -95,6 +104,9 @@ router.beforeEach((to, from, next) => {
     // Check if the user is an admin and redirect to Admin if they are
     if (user.role === "admin" && to.name !== "Admin") {
       return next({ name: "Admin" });
+    }
+    if (user.role === "agent" && to.name !== "Agent") {
+      return next({ name: "Agent" });
     }
   }
 

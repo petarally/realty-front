@@ -42,5 +42,8 @@
     "wifi": "WiFi"
   },
   "cookie_message": "Ova stranica koristi kolačiće kako bi vam pružila najbolje moguće iskustvo.",
-  "accept": "Prihvati"
+  "accept": "Prihvati",
+  "davor_role": "Vlasnik",
+  "ivana_role": "Vlasnica / Marketing Lead",
+  "lorena_role": "Agentica"
 }

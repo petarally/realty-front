@@ -42,5 +42,8 @@
     "wifi": "WiFi"
   },
   "cookie_message": "Questo sito web utilizza i cookie per offrirti la migliore esperienza possibile.",
-  "accept": "Accetta"
+  "accept": "Accetta",
+  "davor_role": "Proprietario",
+  "ivana_role": "Proprietaria / Marketing Lead",
+  "lorena_role": "Agente"
 }
