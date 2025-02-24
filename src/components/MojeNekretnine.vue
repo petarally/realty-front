@@ -11,7 +11,7 @@ const loading = ref(true);
 const fetchProperties = async () => {
   loading.value = true;
   try {
-    const response = await axios.get("/posts");
+    const response = await axios.get("/nekretnine");
     properties.value = response.data;
     console.log("Properties fetched:", properties.value);
   } catch (error) {

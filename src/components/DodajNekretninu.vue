@@ -67,8 +67,8 @@ const description = ref({ en: "", hr: "", it: "", de: "" });
 const opciPodaciDva = ref({ buildType: "", buildYear: "", saleType: "" });
 const prodavatelji = ref({ sellerName: "", sellerEmail: "", sellerPhone: "" });
 
-// Image Upload Handling
-const images = ref([]); // Holds File objects
+// Upload slika početak
+const images = ref([]);
 const imagePreviews = ref(new Array(5).fill(null));
 
 const previewImage = async (event, index) => {
@@ -100,7 +100,6 @@ const handleDragOver = (event) => {
   event.preventDefault();
 };
 
-// Function to upload images and get URLs
 const uploadImages = async () => {
   const formData = new FormData();
   images.value.forEach((image) => {
@@ -111,16 +110,18 @@ const uploadImages = async () => {
     const response = await axios.post("/upload-images", formData, {
       headers: { "Content-Type": "multipart/form-data" },
     });
-    return response.data.imageUrls; // Server should return an array of image URLs
+    return response.data.imageUrls; // Vraća niz URL-ova slika
   } catch (error) {
     console.error("Error uploading images:", error);
     return [];
   }
 };
+// Upload slika kraj
 
-// Function to prepare data for the database
-const prepareDataForDatabase = (imageUrls) => {
-  return {
+// Funkcija za dodavanje nekretnine (prvo upload slika, zatim slanje podataka o nekretnini)
+const prepareData = async () => {
+  const imageUrls = await uploadImages();
+  const data = {
     propertyName: { ...propertyName.value },
     address: opciPodaci.value.address,
     price: opciPodaci.value.price,
@@ -133,24 +134,35 @@ const prepareDataForDatabase = (imageUrls) => {
     buildType: opciPodaciDva.value.buildType,
     buildYear: opciPodaciDva.value.buildYear,
     saleType: opciPodaciDva.value.saleType,
-    seller: { ...prodavatelji.value },
-    images: imageUrls, // Store image URLs
+    images: imageUrls,
+    userEmail: userEmail,
+    date: new Date().toISOString(),
   };
+  return data;
 };
 
-// Function to add realty (upload images first, then send property data)
 const addRealty = async () => {
-  console.log("Uploading images...");
-  const imageUrls = await uploadImages();
-
-  console.log("Sending property data...");
-  const data = prepareDataForDatabase(imageUrls);
-
+  const nekretnina = await prepareData();
   try {
-    await axios.post("/properties", data);
-    console.log("Property added successfully!");
+    const response = await axios.post("/nekretnine", nekretnina, {
+      headers: {
+        Authorization: `Bearer ${authToken}`, // Include the token in the request headers
+      },
+    });
+    const nekretninaId = response.data.id;
+    console.log("Nekretnina je uspješno dodana u bazu!");
+    const prodavatelj = {
+      ...prodavatelji.value,
+      nekretninaId,
+    };
+    await axios.post("/prodavatelji", prodavatelj, {
+      headers: {
+        Authorization: `Bearer ${authToken}`,
+      },
+    });
+    console.log("Prodavatelj je uspješno dodan u bazu!");
   } catch (error) {
-    console.error("Error adding property:", error);
+    console.error("Greška prilikom dodavanja nekretnine:", error);
   }
 };
 </script>
