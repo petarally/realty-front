@@ -42,7 +42,7 @@ import Prodavatelji from "./DodajNekretninuForma/Prodavatelji.vue";
 import SlikeNekretnine from "./DodajNekretninuForma/SlikeNekretnine.vue";
 
 const userEmail = JSON.parse(localStorage.getItem("user")).email;
-console.log(userEmail);
+const authToken = JSON.parse(localStorage.getItem("user")).token;
 
 const propertyName = ref({ en: "", hr: "", it: "", de: "" });
 const opciPodaci = ref({
@@ -146,7 +146,7 @@ const addRealty = async () => {
   try {
     const response = await axios.post("/nekretnine", nekretnina, {
       headers: {
-        Authorization: `Bearer ${authToken}`, // Include the token in the request headers
+        Authorization: `Bearer ${authToken}`,
       },
     });
     const nekretninaId = response.data.id;
@@ -155,7 +155,7 @@ const addRealty = async () => {
       ...prodavatelji.value,
       nekretninaId,
     };
-    await axios.post("/prodavatelji", prodavatelj, {
+    await axios.post("/nekretnine/prodavatelji", prodavatelj, {
       headers: {
         Authorization: `Bearer ${authToken}`,
       },
