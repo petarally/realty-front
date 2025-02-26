@@ -106,7 +106,7 @@ const router = useRouter();
 
 const fetchData = async () => {
   try {
-    const response = await axios.get("/posts");
+    const response = await axios.get("/nekretnine");
     responseData.value = response.data;
   } catch (error) {
     console.error("Error fetching data:", error);

@@ -102,13 +102,20 @@ const handleDragOver = (event) => {
 
 const uploadImages = async () => {
   const formData = new FormData();
-  images.value.forEach((image) => {
+  images.value.forEach((image, index) => {
     if (image) formData.append("images", image);
   });
 
   try {
     const response = await axios.post("/upload-images", formData, {
       headers: { "Content-Type": "multipart/form-data" },
+      onUploadProgress: (progressEvent) => {
+        const totalImages = images.value.length;
+        const uploadedImages = Math.round(
+          (progressEvent.loaded * totalImages) / progressEvent.total
+        );
+        alert(`${uploadedImages}/${totalImages} images uploaded`);
+      },
     });
     return response.data.imageUrls; // Vraća niz URL-ova slika
   } catch (error) {
@@ -151,6 +158,7 @@ const addRealty = async () => {
     });
     const nekretninaId = response.data.id;
     console.log("Nekretnina je uspješno dodana u bazu!");
+    alert("Nekretnina je uspješno dodana u bazu!");
     const prodavatelj = {
       ...prodavatelji.value,
       nekretninaId,
@@ -161,6 +169,7 @@ const addRealty = async () => {
       },
     });
     console.log("Prodavatelj je uspješno dodan u bazu!");
+    alert("Prodavatelj je uspješno dodan u bazu!");
   } catch (error) {
     console.error("Greška prilikom dodavanja nekretnine:", error);
   }

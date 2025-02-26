@@ -2,7 +2,7 @@
   <div>
     <Navbar />
     <div
-      class="text-gray-100 py-5 dark:bg-gray-900 dark:text-gray-200"
+      class="text-gray-100 py-5 dark:bg-gray-900 dark:text-gray-200 pt-32"
       style="background-color: #546dac"
     >
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-2">
@@ -140,7 +140,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted, inject, computed } from "vue";
+import { ref, onMounted, computed } from "vue";
 import { useRoute } from "vue-router";
 import Navbar from "../components/NavbarComponent.vue";
 import ImageView from "../components/ImageViewComponent.vue";
@@ -149,7 +149,7 @@ import Footer from "../components/FooterComponent.vue";
 import axios from "../axios";
 
 const route = useRoute();
-const selectedLanguage = inject("selectedLanguage");
+const selectedLanguage = ref(localStorage.getItem("language") || "en");
 const property = ref({});
 
 const formatPrice = (value) => {
@@ -162,7 +162,7 @@ const formattedPrice = computed(() => {
 
 const propertyName = computed(() => {
   return (
-    property.value?.propertyName?.[selectedLanguage.value.code] ||
+    property.value?.propertyName?.[selectedLanguage.value] ||
     property.value?.propertyName?.["en"] ||
     ""
   );
@@ -170,7 +170,7 @@ const propertyName = computed(() => {
 
 const propertyDescription = computed(() => {
   return (
-    property.value?.description?.[selectedLanguage.value.code] ||
+    property.value?.description?.[selectedLanguage.value] ||
     property.value?.description?.["en"] ||
     ""
   );
@@ -179,7 +179,7 @@ const propertyDescription = computed(() => {
 onMounted(async () => {
   const propertyId = route.params.id;
   try {
-    const response = await axios.get(`/post/${propertyId}`);
+    const response = await axios.get(`/nekretnine/${propertyId}`);
     property.value = response.data;
     console.log("Fetched property data:", property.value);
   } catch (error) {
@@ -187,7 +187,3 @@ onMounted(async () => {
   }
 });
 </script>
-
-<style scoped>
-/* Add any additional styles if needed */
-</style>

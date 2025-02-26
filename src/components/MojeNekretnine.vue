@@ -14,6 +14,7 @@ const fetchProperties = async () => {
     const response = await axios.get("/nekretnine");
     properties.value = response.data;
     console.log("Properties fetched:", properties.value);
+    console.log(properties.value[0].images[0]);
   } catch (error) {
     console.error("Error fetching properties:", error);
   } finally {
@@ -157,6 +158,8 @@ onMounted(() => {
           <tbody class="bg-white divide-y divide-gray-300">
             <tr v-for="property in properties" :key="property.id">
               <td class="px-4 sm:px-6 py-3 text-sm font-medium text-gray-900">
+                <p>Image URL: {{ property.images[0] }}</p>
+                <!-- Debugging -->
                 <img
                   v-if="property.images && property.images.length > 0"
                   :src="property.images[0]"
@@ -164,6 +167,7 @@ onMounted(() => {
                   class="w-24 h-16 sm:w-32 sm:h-24 object-cover"
                 />
               </td>
+
               <td class="px-4 sm:px-6 py-3 text-sm font-medium text-gray-900">
                 {{ property.propertyName?.hr }}
               </td>

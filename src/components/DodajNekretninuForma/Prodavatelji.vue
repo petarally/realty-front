@@ -1,30 +1,30 @@
 <template>
   <div>
     <div>
-      <label for="sellerName">Seller Name</label>
+      <label for="sellerName">Ime i prezime prodavatelja</label>
       <input
         v-model="sellerName"
         @input="$emit('update:sellerName', sellerName)"
         type="text"
-        placeholder="Seller Name"
+        placeholder="Unesite ime i prezime prodavatelja"
       />
     </div>
     <div>
-      <label for="sellerEmail">Seller Email</label>
+      <label for="sellerEmail">Email prodavatelja</label>
       <input
         v-model="sellerEmail"
         @input="$emit('update:sellerEmail', sellerEmail)"
         type="email"
-        placeholder="Seller Email"
+        placeholder="Unesite email prodavatelja"
       />
     </div>
     <div>
-      <label for="sellerPhone">Seller Phone</label>
+      <label for="sellerPhone">Broj telefona prodavatelja</label>
       <input
         v-model="sellerPhone"
         @input="$emit('update:sellerPhone', sellerPhone)"
         type="text"
-        placeholder="Seller Phone"
+        placeholder="Unesite broj telefona prodavatelja"
       />
     </div>
   </div>
@@ -33,7 +33,6 @@
 <script setup>
 import { ref, defineProps, defineEmits, watch } from "vue";
 
-// Define props for parent component to pass down values
 const props = defineProps({
   modelValue: {
     type: Object,
@@ -41,20 +40,17 @@ const props = defineProps({
   },
 });
 
-// Define emits to explicitly declare custom events
 const emit = defineEmits([
   "update:sellerName",
   "update:sellerEmail",
   "update:sellerPhone",
-  "update:modelValue", // Added this line to declare update:modelValue event
+  "update:modelValue",
 ]);
 
-// Reactive values for form fields
 const sellerName = ref(props.modelValue.sellerName);
 const sellerEmail = ref(props.modelValue.sellerEmail);
 const sellerPhone = ref(props.modelValue.sellerPhone);
 
-// Watch for changes to sync them back to the parent
 watch([sellerName, sellerEmail, sellerPhone], () => {
   emit("update:modelValue", {
     sellerName: sellerName.value,
@@ -65,7 +61,6 @@ watch([sellerName, sellerEmail, sellerPhone], () => {
 </script>
 
 <style scoped>
-/* Style for the seller form section */
 div {
   margin-bottom: 1rem;
 }

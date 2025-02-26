@@ -126,7 +126,7 @@ const responseData = ref([]);
 
 const fetchData = async () => {
   try {
-    const response = await axios.get("/api/search", {
+    const response = await axios.get("nekretnine/search", {
       params: route.query,
     });
     responseData.value = response.data;

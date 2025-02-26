@@ -20,31 +20,33 @@
       </a>
       <div class="flex gap-2 py-3 h-12">
         <span
-          v-if="amenities.bedrooms"
+          v-if="amenities.bedrooms !== undefined && amenities.bedrooms !== null"
           class="flex items-center justify-center p-2 rounded text-blue-600"
         >
           <i class="fas fa-bed"></i> {{ amenities.bedrooms }}
         </span>
         <span
-          v-if="amenities.bathrooms"
+          v-if="
+            amenities.bathrooms !== undefined && amenities.bathrooms !== null
+          "
           class="flex items-center justify-center p-2 rounded text-green-600"
         >
           <i class="fas fa-bath"></i> {{ amenities.bathrooms }}
         </span>
         <span
-          v-if="amenities.parking"
+          v-if="amenities.parking !== undefined && amenities.parking !== null"
           class="flex items-center justify-center p-2 rounded text-yellow-600"
         >
           <i class="fas fa-car"></i>
         </span>
         <span
-          v-if="amenities.garage"
+          v-if="amenities.garage !== undefined && amenities.garage !== null"
           class="flex items-center justify-center p-2 rounded text-red-600"
         >
           <i class="fas fa-warehouse"></i>
         </span>
         <span
-          v-if="amenities.pool"
+          v-if="amenities.pool !== undefined && amenities.pool !== null"
           class="flex items-center justify-center p-2 rounded text-teal-600"
         >
           <i class="fas fa-swimming-pool"></i>
@@ -66,7 +68,7 @@
 </template>
 
 <script setup>
-import { inject, defineProps, computed, defineEmits } from "vue";
+import { ref, defineProps, computed, defineEmits } from "vue";
 
 const props = defineProps({
   post: {
@@ -75,14 +77,15 @@ const props = defineProps({
   },
 });
 
-const amenities = props.post.amenities;
+const amenities = computed(() => props.post?.amenities || {});
 const emits = defineEmits(["card-click"]);
 
-const selectedLanguage = inject("selectedLanguage");
+// const selectedLanguage = inject("selectedLanguage");
+const selectedLanguage = ref(localStorage.getItem("language") || "en");
 
 const propertyName = computed(() => {
   return (
-    props.post.propertyName?.[selectedLanguage.value.code] ||
+    props.post.propertyName?.[selectedLanguage.value] ||
     props.post.propertyName?.["en"] ||
     "Property Name Not Available"
   );

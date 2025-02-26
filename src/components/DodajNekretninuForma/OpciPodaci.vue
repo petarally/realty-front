@@ -13,7 +13,7 @@
         type="text"
         :value="modelValue.address"
         @input="updateModel('address', $event.target.value)"
-        placeholder="Unesite adresu"
+        placeholder="Unesite lokaciju (npr. Pula, Ližnjan, Medulin)"
         class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
       />
     </div>
@@ -59,7 +59,7 @@
       <input
         type="number"
         id="bedrooms"
-        :value="modelValue.bedrooms"
+        :value="modelValue.bedrooms || ''"
         @input="updateModel('bedrooms', $event.target.value)"
         class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
         placeholder="Unesite broj soba"
@@ -74,7 +74,7 @@
       <input
         type="number"
         id="bathrooms"
-        :value="modelValue.bathrooms"
+        :value="modelValue.bathrooms || ''"
         @input="updateModel('bathrooms', $event.target.value)"
         class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
         placeholder="Unesite broj kupaonica"

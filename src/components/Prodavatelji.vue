@@ -70,8 +70,8 @@ const properties = ref([]);
 
 onMounted(async () => {
   try {
-    const sellers_res = await axios.get("/sellers");
-    const properties_res = await axios.get("/posts");
+    const sellers_res = await axios.get("/nekretnine/prodavatelji");
+    const properties_res = await axios.get("/nekretnine");
 
     properties.value = properties_res.data;
     sellers.value = sellers_res.data;
