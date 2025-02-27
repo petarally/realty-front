@@ -70,34 +70,37 @@ const properties = ref([]);
 
 onMounted(async () => {
   try {
-    const sellers_res = await axios.get("/nekretnine/prodavatelji");
+    // Fetching sellers and properties
+    const sellers_res = await axios.get("/prodavatelji");
     const properties_res = await axios.get("/nekretnine");
 
+    // Assigning fetched data to reactive variables
     properties.value = properties_res.data;
     sellers.value = sellers_res.data;
 
+    // Loop through sellers and map their properties
     sellers.value.forEach((seller) => {
-      if (seller.propertyId && Array.isArray(seller.propertyId)) {
-        seller.properties = seller.propertyId
+      const { sellerName, sellerEmail, sellerPhone, nekretninaId } = seller;
+
+      if (Array.isArray(nekretninaId)) {
+        seller.properties = nekretninaId
           .map((propertyId) => {
             const matchedProperty = properties.value.find(
               (property) => property._id === propertyId
             );
-            console.log(
-              `Matched property for ${seller.name}:`,
-              matchedProperty
-            );
+
             return matchedProperty;
           })
           .filter(Boolean);
       } else {
-        seller.properties = [];
+        const matchedProperty = properties.value.find(
+          (property) => property._id === nekretninaId
+        );
+        seller.properties = matchedProperty ? [matchedProperty] : [];
       }
-    });
-
-    // Log each seller's properties to verify the mapping
-    sellers.value.forEach((seller) => {
-      console.log(`${seller.name}'s properties:`, seller.properties);
+      seller.name = sellerName;
+      seller.phone = sellerPhone;
+      seller.email = sellerEmail;
     });
   } catch (error) {
     console.error("Error fetching data:", error);

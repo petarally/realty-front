@@ -330,66 +330,73 @@
   </div>
 </template>
 
-<script lang="ts">
-import { defineComponent, ref, watch } from "vue";
-import axios from "axios";
+<script setup>
+import { ref, watch } from "vue";
+import axios from "../axios";
+import { defineProps, defineEmits } from "vue";
 
-export default defineComponent({
-  name: "EditPropertyModal",
-  props: {
-    isOpen: {
-      type: Boolean,
-      required: true,
-    },
-    property: {
-      type: Object,
-      required: true,
-    },
+const authToken = JSON.parse(localStorage.getItem("user")).token;
+
+// Define props
+const props = defineProps({
+  isOpen: {
+    type: Boolean,
+    required: true,
   },
-  setup(props, { emit }) {
-    const currentLanguage = ref("hr");
-    const descriptionLanguage = ref("hr");
-
-    // Clone the property object to avoid mutating the original
-    const editedProperty = ref({ ...props.property });
-
-    watch(
-      () => props.property,
-      (newVal) => {
-        editedProperty.value = { ...newVal };
-      }
-    );
-
-    // Function to close modal
-    const closeModal = () => {
-      emit("close");
-    };
-
-    // Function to handle property update
-    const updateProperty = async () => {
-      try {
-        if (editedProperty.value.id) {
-          await axios.patch(`/api/properties/${editedProperty.value.id}`, {
-            ...editedProperty.value,
-          });
-
-          emit("propertyUpdated");
-          closeModal();
-        }
-      } catch (error) {
-        console.error("Error updating property: ", error);
-      }
-    };
-
-    return {
-      currentLanguage,
-      descriptionLanguage,
-      editedProperty,
-      closeModal,
-      updateProperty,
-    };
+  property: {
+    type: Object,
+    required: true,
   },
 });
+
+// Define emits
+const emit = defineEmits(["close", "propertyUpdated"]);
+
+const currentLanguage = ref("hr");
+const descriptionLanguage = ref("hr");
+
+// Clone the property object to avoid mutating the original
+const editedProperty = ref({ ...props.property });
+
+watch(
+  () => props.property,
+  (newVal) => {
+    editedProperty.value = { ...newVal };
+  }
+);
+
+// Function to close modal
+const closeModal = () => {
+  emit("close");
+};
+
+// Function to handle property update
+const updateProperty = async () => {
+  console.log("Update button has been clicked!");
+  console.log(editedProperty.value._id);
+
+  try {
+    // Remove the _id before sending the update request
+    const { _id, ...propertyData } = editedProperty.value;
+
+    if (_id) {
+      await axios.patch(
+        `/nekretnine/${_id}`,
+        propertyData, // Send the data without the _id
+        {
+          headers: {
+            Authorization: `Bearer ${authToken}`,
+          },
+        }
+      );
+
+      emit("propertyUpdated");
+      closeModal();
+    }
+  } catch (error) {
+    console.error("Error updating property: ", error);
+  }
+};
 </script>
 
 <style scoped>

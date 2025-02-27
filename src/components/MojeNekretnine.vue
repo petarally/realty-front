@@ -1,4 +1,4 @@
-<script lang="ts" setup>
+<script setup>
 import { ref, shallowRef, onMounted, markRaw } from "vue";
 import axios from "../axios";
 import EditPropertyModal from "../components/EditPropertyModal.vue";
@@ -14,7 +14,7 @@ const fetchProperties = async () => {
     const response = await axios.get("/nekretnine");
     properties.value = response.data;
     console.log("Properties fetched:", properties.value);
-    console.log(properties.value[0].images[0]);
+    console.log(properties.value[0]?.images?.[0]); // Added optional chaining to prevent errors
   } catch (error) {
     console.error("Error fetching properties:", error);
   } finally {
@@ -22,11 +22,11 @@ const fetchProperties = async () => {
   }
 };
 
-const selectedProperty = shallowRef<any>(null);
+const selectedProperty = shallowRef(null);
 const isEditModalOpen = ref(false);
 
-const openEditModal = (property: any) => {
-  selectedProperty.value = { ...property }; // Clone the property object to avoid mutating the original
+const openEditModal = (property) => {
+  selectedProperty.value = markRaw({ ...property }); // Clone property
   isEditModalOpen.value = true;
 };
 
@@ -36,7 +36,7 @@ const closeEditModal = () => {
 };
 
 // Handle deletion of a property
-const deleteProperty = async (propertyId: string, imageUrls: string[]) => {
+const deleteProperty = async (propertyId, imageUrls) => {
   if (confirm("Jeste li sigurni da želite izbrisati ovu nekretninu?")) {
     try {
       // Delete the property document from the backend
@@ -61,29 +61,8 @@ const deleteProperty = async (propertyId: string, imageUrls: string[]) => {
   }
 };
 
-const formatPrice = (price: number | null | undefined) => {
-  if (price == null) {
-    return "N/A"; // Return a default value if price is null or undefined
-  }
-  return price.toLocaleString("hr-HR", {
-    style: "currency",
-    currency: "EUR",
-  });
-};
-
-// Toggle the displayOnIndex field
-const toggleDisplayOnIndex = async (
-  propertyId: string,
-  currentValue: boolean
-) => {
-  try {
-    await axios.patch(`/properties/${propertyId}`, {
-      displayOnIndex: !currentValue,
-    });
-    await fetchProperties(); // Refresh the list after update
-  } catch (error) {
-    console.error("Error updating property: ", error);
-  }
+const formatPrice = (value) => {
+  return new Intl.NumberFormat("hr-HR").format(value);
 };
 
 // Fetch properties on component mount
@@ -146,11 +125,6 @@ onMounted(() => {
               <th
                 class="px-4 sm:px-6 py-3 text-left text-sm sm:text-lg font-semibold text-gray-700"
               >
-                Prikaz na početnoj
-              </th>
-              <th
-                class="px-4 sm:px-6 py-3 text-left text-sm sm:text-lg font-semibold text-gray-700"
-              >
                 Radnja
               </th>
             </tr>
@@ -158,8 +132,6 @@ onMounted(() => {
           <tbody class="bg-white divide-y divide-gray-300">
             <tr v-for="property in properties" :key="property.id">
               <td class="px-4 sm:px-6 py-3 text-sm font-medium text-gray-900">
-                <p>Image URL: {{ property.images[0] }}</p>
-                <!-- Debugging -->
                 <img
                   v-if="property.images && property.images.length > 0"
                   :src="property.images[0]"
@@ -175,16 +147,7 @@ onMounted(() => {
                 {{ property.address }}
               </td>
               <td class="px-4 sm:px-6 py-3 text-sm font-medium text-gray-900">
-                {{ formatPrice(property.price) }}
-              </td>
-              <td class="px-4 sm:px-6 py-3 text-sm font-medium text-gray-900">
-                <input
-                  type="checkbox"
-                  :checked="property.displayOnIndex"
-                  @change="
-                    toggleDisplayOnIndex(property.id, property.displayOnIndex)
-                  "
-                />
+                {{ formatPrice(property.price) }} €
               </td>
               <td class="px-4 sm:px-6 py-3 text-sm font-medium text-gray-900">
                 <div class="flex space-x-2">
@@ -210,7 +173,7 @@ onMounted(() => {
 
     <!-- Edit Property Modal -->
     <EditPropertyModal
-      v-if="selectedProperty"
+      v-if="isEditModalOpen"
       :isOpen="isEditModalOpen"
       :property="markRaw(selectedProperty)"
       @close="closeEditModal"
