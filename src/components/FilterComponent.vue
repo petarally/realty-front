@@ -6,14 +6,14 @@
     <div class="grid grid-cols-1 md:grid-cols-3 gap-4 h-full items-center">
       <div class="relative">
         <input
-          v-model="filters.location"
+          v-model="filters.address"
           type="text"
-          id="location"
+          id="address"
           class="block px-2.5 pt-4 pb-2.5 w-full text-sm text-gray-900 bg-white dark:bg-gray-700 rounded-lg border border-gray-300 dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
           placeholder=" "
         />
         <label
-          for="location"
+          for="address"
           class="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white dark:bg-gray-700 px-2 peer-focus:px-2 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto"
           >{{ $t("location") }}</label
         >
@@ -26,10 +26,12 @@
           class="block px-2.5 pt-4 pb-2.5 w-full text-sm text-gray-500 dark:text-gray-400 bg-white dark:bg-gray-700 rounded-lg border border-gray-300 dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
         >
           <option value="">{{ $t("property_type") }}</option>
-          <option value="houses">Houses</option>
-          <option value="apartment">Apartments</option>
-          <option value="villas">Villas</option>
-          <option value="lands">Lands</option>
+          <option value="houses">{{ $t("filterComponent.houses") }}</option>
+          <option value="apartment">
+            {{ $t("filterComponent.apartments") }}
+          </option>
+          <option value="villa">{{ $t("filterComponent.villas") }}</option>
+          <option value="lands">{{ $t("filterComponent.lands") }}</option>
         </select>
       </div>
 
@@ -91,39 +93,41 @@
   </div>
 </template>
 
-<script>
+<script setup>
 import { inject, ref } from "vue";
 import { useRouter } from "vue-router";
+import axios from "../axios";
 
-export default {
-  setup() {
-    const selectedLanguage = inject("selectedLanguage");
-    const router = useRouter();
+const selectedLanguage = inject("selectedLanguage", ref({ code: "en" }));
+const router = useRouter();
 
-    const filters = ref({
-      location: "",
-      maxPrice: "",
-      maxArea: "",
-      type: "",
-      propertyId: "",
-    });
+const filters = ref({
+  address: "",
+  maxPrice: "",
+  maxArea: "",
+  type: "",
+  propertyId: "",
+});
 
-    const searchProperties = () => {
-      if (!selectedLanguage || !selectedLanguage.value) {
-        console.error("selectedLanguage is not defined");
-        return;
-      }
-      const query = Object.fromEntries(
-        Object.entries(filters.value).filter(([key, value]) => value)
-      );
-      const queryString = new URLSearchParams(query).toString();
-      router.push(`/${selectedLanguage.value.code}/properties?${queryString}`);
-    };
-
-    return {
-      filters,
-      searchProperties,
-    };
-  },
+const searchProperties = async () => {
+  if (!selectedLanguage?.value?.code) return;
+  if (filters.value.maxArea) {
+    filters.value.maxArea = parseFloat(filters.value.maxArea);
+  }
+  if (filters.value.maxPrice) {
+    filters.value.maxPrice = parseFloat(filters.value.maxPrice);
+  }
+  const query = Object.fromEntries(
+    Object.entries(filters.value).filter(([_, value]) => value)
+  );
+  const queryString = new URLSearchParams(query).toString();
+  console.log("Query String:", queryString);
+  try {
+    const { data } = await axios.get(`nekretnine/search?${queryString}`);
+    console.log("Search Results:", data);
+  } catch (error) {
+    console.error("Error fetching properties:", error);
+  }
+  router.push(`/${selectedLanguage.value.code}/properties?${queryString}`);
 };
 </script>

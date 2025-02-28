@@ -42,6 +42,12 @@
     "sewageSystem": "Sewage System",
     "wifi": "WiFi"
   },
+  "filterComponent": {
+    "houses": "Houses",
+    "apartments": "Appartments",
+    "villas": "Villas",
+    "lands": "Lands"
+  },
   "cookie_message": "This website uses cookies to provide you with the best possible experience.",
   "accept": "Accept",
   "davor_role": "Owner",

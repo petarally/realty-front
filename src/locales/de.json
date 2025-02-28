@@ -42,6 +42,12 @@
     "sewageSystem": "Abwassersystem",
     "wifi": "WiFi"
   },
+  "filterComponent": {
+    "houses": "Häuser",
+    "apartments": "Wohnungen",
+    "villas": "Villen",
+    "lands": "Grundstücke"
+  },
   "cookie_message": "Diese Seite verwendet Cookies, um Ihnen das bestmögliche Erlebnis zu bieten.",
   "accept": "Akzeptieren",
   "davor_role": "Eigentümer",

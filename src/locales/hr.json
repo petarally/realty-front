@@ -42,6 +42,12 @@
     "sewageSystem": "Sustav odvodnje",
     "wifi": "WiFi"
   },
+  "filterComponent": {
+    "houses": "Kuće",
+    "apartments": "Stanovi",
+    "villas": "Vile",
+    "lands": "Zemljišta"
+  },
   "cookie_message": "Ova stranica koristi kolačiće kako bi vam pružila najbolje moguće iskustvo.",
   "accept": "Prihvati",
   "davor_role": "Vlasnik",

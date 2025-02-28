@@ -144,6 +144,7 @@ const prepareData = async () => {
     images: imageUrls,
     userEmail: userEmail,
     date: new Date().toISOString(),
+    deleted: false,
   };
   return data;
 };
