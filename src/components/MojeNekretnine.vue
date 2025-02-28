@@ -12,7 +12,7 @@ const fetchProperties = async () => {
   loading.value = true;
   try {
     const response = await axios.get("/nekretnine");
-    properties.value = response.data;
+    properties.value = response.data.filter((property) => !property.delete);
     console.log("Properties fetched:", properties.value);
     console.log(properties.value[0]?.images?.[0]); // Added optional chaining to prevent errors
   } catch (error) {
@@ -36,27 +36,29 @@ const closeEditModal = () => {
 };
 
 // Handle deletion of a property
-const deleteProperty = async (propertyId, imageUrls) => {
+const deleteProperty = async (propertyId) => {
+  const authToken = JSON.parse(localStorage.getItem("user")).token;
+
   if (confirm("Jeste li sigurni da želite izbrisati ovu nekretninu?")) {
     try {
       // Delete the property document from the backend
-      await axios.delete(`/properties/${propertyId}`);
+      const response = await axios.delete(`/delete/${propertyId}`, {
+        headers: {
+          Authorization: `Bearer ${authToken}`,
+        },
+      });
 
-      // Delete all images associated with the property from the backend
-      for (const imageUrl of imageUrls) {
-        const imageName = imageUrl.split("/").pop(); // Extract image name from URL
-        if (imageName) {
-          await axios.delete(`/images/${imageName}`);
-        }
+      // Check if the response was successful
+      if (response.status === 200) {
+        // Refresh the property list
+        await fetchProperties();
+        alert("Nekretnina je uspješno izbrisana!");
+      } else {
+        alert("Greška pri brisanju nekretnine.");
       }
-
-      // Refresh the property list
-      await fetchProperties();
-
-      // Show success alert
-      alert("Nekretnina je uspješno izbrisana iz baze!");
     } catch (error) {
       console.error("Error deleting property: ", error);
+      alert("Došlo je do greške pri brisanju nekretnine.");
     }
   }
 };
@@ -158,7 +160,7 @@ onMounted(() => {
                     Uredi
                   </button>
                   <button
-                    @click="deleteProperty(property.id, property.images)"
+                    @click="deleteProperty(property._id)"
                     class="bg-red-500 text-white px-4 py-2 rounded-lg flex-1"
                   >
                     Izbriši

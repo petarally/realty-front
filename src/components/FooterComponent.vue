@@ -1,11 +1,23 @@
 <script setup>
 import { useThemeStore } from "../store/themeStore";
+import NewslettersForm from "./NewslettersForm.vue";
 const themeStore = useThemeStore();
 </script>
 
 <template>
-  <footer class="bg-white dark:bg-gray-900 mt-20">
-    <hr class="border-gray-300 dark:border-gray-700 mb-4" />
+  <footer class="bg-white dark:bg-gray-900 mt-20 py-8">
+    <!-- Newsletter Form Section -->
+    <div class="max-w-2xl mx-auto mb-8 text-center">
+      <h2 class="text-2xl font-semibold text-gray-800 dark:text-white mb-4">
+        Subscribe to Our Newsletter
+      </h2>
+      <NewslettersForm />
+    </div>
+
+    <!-- Divider Line -->
+    <hr class="border-gray-300 dark:border-gray-700 mb-6" />
+
+    <!-- Footer Content -->
     <div class="mx-auto w-full max-w-screen-xl p-4">
       <div class="md:flex md:justify-between items-center">
         <div class="mb-6 md:mb-0">

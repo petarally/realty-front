@@ -129,7 +129,7 @@ const fetchData = async () => {
     const response = await axios.get("nekretnine/search", {
       params: route.query,
     });
-    responseData.value = response.data;
+    responseData.value = response.data.filter((property) => !property.delete);
   } catch (error) {
     console.error("Error fetching data:", error);
   }
