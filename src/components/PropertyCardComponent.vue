@@ -10,15 +10,15 @@
         alt="Property image"
       />
     </a>
-    <div class="px-5 py-3 pb-5">
+    <div class="px-5 py-3">
       <a href="#">
         <h5
-          class="text-lg font-semibold tracking-tight text-gray-900 dark:text-white h-16 overflow-hidden"
+          class="text-lg font-semibold tracking-tight text-gray-900 dark:text-white h-8 overflow-hidden"
         >
           {{ propertyName }}
         </h5>
       </a>
-      <div class="flex gap-2 py-3 h-12">
+      <div class="flex gap-2 py-3">
         <span
           v-if="amenities.bedrooms !== undefined && amenities.bedrooms !== null"
           class="flex items-center justify-center p-2 rounded text-blue-600"
@@ -53,15 +53,10 @@
         </span>
       </div>
       <hr class="py-2" />
-      <div class="flex items-center justify-between h-12">
-        <span class="text-3xl font-bold text-gray-900 dark:text-white">
+      <div class="flex items-center justify-end h-8">
+        <span class="text-xl font-bold text-gray-900 dark:text-white">
           {{ formatPrice(post.price) }} €
         </span>
-        <a
-          href="#"
-          class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-          >{{ $t("details") }}</a
-        >
       </div>
     </div>
   </div>
@@ -80,7 +75,6 @@ const props = defineProps({
 const amenities = computed(() => props.post?.amenities || {});
 const emits = defineEmits(["card-click"]);
 
-// const selectedLanguage = inject("selectedLanguage");
 const selectedLanguage = ref(localStorage.getItem("language") || "en");
 
 const propertyName = computed(() => {
@@ -109,8 +103,8 @@ const handleClick = () => {
 
 <style scoped>
 img {
-  width: 400px;
-  height: 300px;
+  width: 300px;
+  height: 200px;
   object-fit: cover;
 }
 </style>
