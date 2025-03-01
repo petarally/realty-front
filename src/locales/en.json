@@ -52,5 +52,13 @@
   "accept": "Accept",
   "davor_role": "Owner",
   "ivana_role": "Owner / Marketing Lead",
-  "lorena_role": "Agent"
+  "lorena_role": "Agent",
+  "newslettersForm": {
+    "placeholder_name": "Full Name",
+    "placeholder_email": "Email Address",
+    "subscribeBtn": "Free Subscription",
+    "subscribeLoading": "Subscription in progress...",
+    "subscribed": "Thank you for your trust!",
+    "subscribeErr": "Something went wrong. Please try again."
+  }
 }

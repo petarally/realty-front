@@ -52,5 +52,11 @@
   "accept": "Accetta",
   "davor_role": "Proprietario",
   "ivana_role": "Proprietaria / Marketing Lead",
-  "lorena_role": "Agente"
+  "lorena_role": "Agente",
+  "newslettersForm": {
+    "placeholder_name": "Nome e cognome",
+    "placeholder_email": "Indirizzo email",
+    "subscribeBtn": "Iscriviti gratuitamente",
+    "subscribeLoading": "Iscrizione in corso..."
+  }
 }

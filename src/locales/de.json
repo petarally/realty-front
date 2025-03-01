@@ -52,5 +52,13 @@
   "accept": "Akzeptieren",
   "davor_role": "Eigentümer",
   "ivana_role": "Eigentümerin / Marketing Lead",
-  "lorena_role": "Agentin"
+  "lorena_role": "Agentin",
+  "newslettersForm": {
+    "placeholder_name": "Vollständiger Name",
+    "placeholder_email": "E-Mail-Adresse",
+    "subscribeBtn": "Kostenloses Abonnement",
+    "subscribeLoading": "Abonnement läuft...",
+    "subscribed": "Vielen Dank für Ihr Vertrauen!",
+    "subscribeErr": "Etwas ist schief gelaufen. Bitte versuchen Sie es erneut."
+  }
 }

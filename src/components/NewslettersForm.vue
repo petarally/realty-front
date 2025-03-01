@@ -8,7 +8,7 @@
           type="text"
           required
           class="block w-full px-4 py-2 mt-2 border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-200 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-          placeholder="Ime i prezime"
+          :placeholder="$t('newslettersForm.placeholder_name')"
         />
       </div>
 
@@ -19,7 +19,7 @@
           type="email"
           required
           class="block w-full px-4 py-2 mt-2 border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-200 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-          placeholder="Email"
+          :placeholder="$t('newslettersForm.placeholder_email')"
         />
       </div>
 
@@ -28,8 +28,8 @@
         class="w-full py-2 bg-[#34519D] dark:bg-[#0056b3] text-white font-semibold rounded-md hover:bg-[#0056b3] dark:hover:bg-[#003f80] focus:outline-none focus:ring-2 focus:ring-[#007BFF]"
         :disabled="loading"
       >
-        <span v-if="loading">Pretplata u tijeku...</span>
-        <span v-else>Besplatna pretplata</span>
+        <span v-if="loading">{{ $t("newslettersForm.subscribeLoading") }}</span>
+        <span v-else>{{ $t("newslettersForm.subscribeBtn") }}</span>
       </button>
     </form>
 
@@ -54,11 +54,14 @@
 <script setup>
 import { ref } from "vue";
 import axios from "../axios";
+import { useI18n } from "vue-i18n";
 
 const form = ref({
   ime_prezime: "",
   email: "",
 });
+
+const { t } = useI18n();
 
 const successMessage = ref("");
 const errorMessage = ref("");
@@ -72,11 +75,11 @@ const submitForm = async () => {
 
   try {
     await axios.post("/pretplatnici", form.value);
-    successMessage.value = "Zahvaljujemo na ukazanom povjerenju!";
+    successMessage.value = t("newslettersForm.subscribed");
     form.value.ime_prezime = "";
     form.value.email = "";
   } catch (error) {
-    errorMessage.value = "Nešto je pošlo po zlu. Molimo pokušajte ponovno.";
+    errorMessage.value = t("newslettersForm.subscribeErr");
   } finally {
     loading.value = false;
   }

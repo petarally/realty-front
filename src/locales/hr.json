@@ -52,5 +52,13 @@
   "accept": "Prihvati",
   "davor_role": "Vlasnik",
   "ivana_role": "Vlasnica / Marketing Lead",
-  "lorena_role": "Agentica"
+  "lorena_role": "Agentica",
+  "newslettersForm": {
+    "placeholder_name": "Ime i prezime",
+    "placeholder_email": "Email adresa",
+    "subscribeBtn": "Besplatna pretplata",
+    "subscribeLoading": "Pretplata u tijeku...",
+    "subscribed": "Zahvaljujemo na ukazanom povjerenju!",
+    "subscribeErr": "Nešto je pošlo po zlu. Molimo pokušajte ponovno."
+  }
 }
