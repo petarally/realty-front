@@ -1,17 +1,34 @@
 <template>
   <div>
     <Navbar />
-    <div class="px-4 md:px-8 lg:px-12 xl:px-16 pt-20">
-      <h1
-        class="text-4xl font-bold text-center my-8 text-gray-900 dark:text-white"
-        aria-labelledby="page-title"
+
+    <div class="pt-20 relative">
+      <div
+        class="relative w-full h-[40vh] bg-cover bg-center hidden sm:block"
+        :style="{ backgroundImage: `url(${officeImage})` }"
       >
-        <span id="page-title" class="sr-only">Welcome to Realty</span>
-        Welcome to Realty
-      </h1>
+        <div class="absolute inset-0 bg-black/20"></div>
 
-      <Filter data-aos="fade-down" data-aos-duration="500" />
+        <div
+          class="absolute inset-0 flex items-center justify-center hidden sm:flex"
+        >
+          <h1 class="text-4xl font-bold text-white text-center">
+            Welcome to Realty
+          </h1>
+        </div>
+      </div>
 
+      <div
+        class="w-full px-4 pt-8 md:px-8 lg:px-12 xl:px-16 sm:pt-0 sm:absolute sm:left-0 sm:transform sm:-translate-y-1/2"
+        style="top: calc(64vh - 50%)"
+        data-aos="fade-down"
+        data-aos-duration="500"
+      >
+        <Filter />
+      </div>
+    </div>
+
+    <div class="px-4 md:px-8 lg:px-12 xl:px-16 md:pt-24 lg:pt-24">
       <h2
         data-aos="fade-down"
         data-aos-duration="500"
@@ -32,7 +49,7 @@
 
       <h2
         data-aos="fade-right"
-        class="text-2xl font-semibold text-[#556dac] mb-4"
+        class="text-2xl font-semibold text-[#556dac] mb-4 py-6"
         aria-labelledby="featured-properties-title"
       >
         <span id="featured-properties-title" class="sr-only">
@@ -93,6 +110,7 @@
 
 <script setup>
 import { ref, onMounted, computed } from "vue";
+import officeImage from "../assets/office.jpg";
 import { useRouter } from "vue-router";
 import { useHead } from "@vueuse/head";
 import Filter from "../components/FilterComponent.vue";
@@ -132,10 +150,10 @@ onMounted(() => {
 const selectedLanguage = localStorage.getItem("language") || "hr";
 
 const metaKeywords = {
-  en: "Istrian Villa, vacation, rental, property, Croatia, Istria",
-  hr: "Istarska Vila, odmor, najam, nekretnina, Hrvatska, Istra",
-  it: "Villa Istriana, vacanza, affitto, proprietà, Croazia, Istria",
-  de: "Istrische Villa, Urlaub, Vermietung, Immobilie, Kroatien, Istrien",
+  en: "Real estate, vacation, rental, property, Croatia, Istria",
+  hr: "Nekretnine, odmor, najam, vlasništvo, Hrvatska, Istra",
+  it: "Immobiliare, vacanza, affitto, proprietà, Croazia, Istria",
+  de: "Immobilien, Urlaub, Miete, Eigentum, Kroatien, Istrien",
 };
 
 useHead({
