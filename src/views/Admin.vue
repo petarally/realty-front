@@ -50,17 +50,31 @@
             </a>
           </li>
 
-          <!-- Dodaj Nekretninu -->
+          <!-- Dodaj Agenta -->
           <li>
             <a
               href="#"
-              @click.prevent="selectComponent('DodajNekretninu')"
+              @click.prevent="selectComponent('DodajAgenta')"
               class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
             >
               <i
                 class="fas fa-plus-square w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
               ></i>
-              <span class="ml-3">Dodaj nekretninu</span>
+              <span class="ml-3">Dodaj agenta</span>
+            </a>
+          </li>
+
+          <!-- Prikaz Agenata -->
+          <li>
+            <a
+              href="#"
+              @click.prevent="selectComponent('PrikazAgenata')"
+              class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
+            >
+              <i
+                class="fas fa-users w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
+              ></i>
+              <span class="ml-3">Agenti</span>
             </a>
           </li>
 
@@ -122,9 +136,10 @@
 import { ref } from "vue";
 import { useRouter } from "vue-router";
 import MojeNekretnine from "../components/MojeNekretnine.vue";
-import DodajNekretninu from "../components/DodajNekretninu.vue";
+import DodajAgenta from "../components/DodajAgenta.vue";
 import Prodavatelji from "../components/Prodavatelji.vue";
 import NewslettersSubscribers from "../components/NewslettersSubscribers.vue";
+import PrikazAgenata from "../components/PrikazAgenata.vue";
 
 const router = useRouter();
 const selectedComponent = ref(MojeNekretnine);
@@ -132,12 +147,14 @@ const selectedComponent = ref(MojeNekretnine);
 const selectComponent = (componentName) => {
   if (componentName === "MojeNekretnine") {
     selectedComponent.value = MojeNekretnine;
-  } else if (componentName === "DodajNekretninu") {
-    selectedComponent.value = DodajNekretninu;
+  } else if (componentName === "DodajAgenta") {
+    selectedComponent.value = DodajAgenta;
   } else if (componentName === "Prodavatelji") {
     selectedComponent.value = Prodavatelji;
   } else if (componentName === "NewslettersSubscribers") {
     selectedComponent.value = NewslettersSubscribers;
+  } else if (componentName === "PrikazAgenata") {
+    selectedComponent.value = PrikazAgenata;
   }
 };
 
