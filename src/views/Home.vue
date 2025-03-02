@@ -13,7 +13,7 @@
           class="absolute inset-0 flex items-center justify-center hidden sm:flex"
         >
           <h1 class="text-4xl font-bold text-white text-center">
-            Welcome to Realty
+            {{ $t("welcome_to_realty") }}
           </h1>
         </div>
       </div>
