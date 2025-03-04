@@ -14,10 +14,7 @@ import LangLayout from "../layouts/LangLayout.vue";
 const defaultLang = localStorage.getItem("language") || "hr";
 
 const routes = [
-  // Redirect '/' to '/:lang' (i.e., homepage for default language)
   { path: "/", redirect: `/${defaultLang}` },
-
-  // Language-specific routes
   {
     path: "/:lang",
     component: LangLayout,
@@ -49,15 +46,11 @@ const routes = [
       },
     ],
   },
-
-  // Login route (should not require a language prefix)
   {
     path: "/login",
     name: "Login",
     component: Login,
   },
-
-  // Admin route (requires authentication)
   {
     path: "/admin",
     name: "Admin",
@@ -74,8 +67,6 @@ const routes = [
       requiresAuth: true,
     },
   },
-
-  // 404 route
   {
     path: "/:pathMatch(.*)*",
     name: "NotFound",
@@ -93,15 +84,11 @@ router.beforeEach((to, from, next) => {
   const baseTitle = "Realty";
   const pageTitle = to.meta.titleKey ? i18n.global.t(to.meta.titleKey) : "";
   document.title = pageTitle ? `${baseTitle} | ${pageTitle}` : baseTitle;
-
-  // Handle authentication for routes that require it
   if (to.meta.requiresAuth) {
     const user = Auth.getUser();
     if (!user) {
       return next({ name: "Login", query: { redirect: to.fullPath } });
     }
-
-    // Check if the user is an admin and redirect to Admin if they are
     if (user.role === "admin" && to.name !== "Admin") {
       return next({ name: "Admin" });
     }
@@ -110,7 +97,6 @@ router.beforeEach((to, from, next) => {
     }
   }
 
-  // Set language
   if (to.params.lang) {
     const supportedLanguages = ["en", "de", "it", "hr"];
     if (!supportedLanguages.includes(to.params.lang)) {

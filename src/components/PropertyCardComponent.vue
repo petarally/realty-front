@@ -1,6 +1,6 @@
 <template>
   <div
-    class="w-full max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 cursor-pointer"
+    class="w-[300px] bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 cursor-pointer"
     @click="handleClick"
   >
     <a href="#">
@@ -13,7 +13,7 @@
     <div class="px-5 py-3">
       <a href="#">
         <h5
-          class="text-lg font-semibold tracking-tight text-gray-900 dark:text-white h-8 overflow-hidden"
+          class="text-lg font-semibold tracking-tight text-gray-900 dark:text-white line-clamp-2 break-words h-[48px]"
         >
           {{ propertyName }}
         </h5>
@@ -106,5 +106,12 @@ img {
   width: 300px;
   height: 200px;
   object-fit: cover;
+}
+.line-clamp-2 {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 </style>

@@ -10,16 +10,20 @@
       </h2>
       <hr data-aos="fade-right" class="border-t border-black w-96 my-4 mb-8" />
       <section class="text-center">
-        <p class="text-lg text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
+        <p
+          data-aos="fade-up"
+          class="text-lg text-gray-600 dark:text-gray-300 max-w-3xl mx-auto"
+        >
           {{ $t("about_description") }}
         </p>
       </section>
 
       <!-- Our Mission -->
       <section
+        data-aos="fade-up"
         class="my-16 grid md:grid-cols-2 gap-8 items-center bg-gray-100 dark:bg-gray-800 p-8 rounded-lg"
       >
-        <div>
+        <div data-aos="fade-right">
           <h2 class="text-3xl font-semibold text-gray-900 dark:text-white">
             {{ $t("our_mission") }}
           </h2>
@@ -28,6 +32,7 @@
           </p>
         </div>
         <img
+          data-aos="fade-left"
           src="../assets/office.jpg"
           alt="office"
           class="rounded-lg shadow-lg w-full"
@@ -36,14 +41,20 @@
 
       <!-- Our Team -->
       <section class="my-16 text-center">
-        <h2 class="text-3xl font-semibold text-gray-900 dark:text-white">
+        <h2
+          data-aos="fade-up"
+          class="text-3xl font-semibold text-gray-900 dark:text-white"
+        >
           {{ $t("meet_our_team") }}
         </h2>
-        <p class="text-lg text-gray-600 dark:text-gray-300 mb-8">
+        <p
+          data-aos="fade-up"
+          class="text-lg text-gray-600 dark:text-gray-300 mb-8"
+        >
           {{ $t("team_description") }}
         </p>
         <div class="grid md:grid-cols-3 gap-8">
-          <div class="text-center">
+          <div class="text-center" data-aos="fade-up" data-aos-delay="100">
             <img
               src="../assets/davor.jpg"
               alt="Davor"
@@ -56,7 +67,7 @@
               {{ $t("davor_role") }}
             </p>
           </div>
-          <div class="text-center">
+          <div class="text-center" data-aos="fade-up" data-aos-delay="200">
             <img
               src="../assets/ivana.jpg"
               alt="Ivana"
@@ -69,7 +80,7 @@
               {{ $t("ivana_role") }}
             </p>
           </div>
-          <div class="text-center">
+          <div class="text-center" data-aos="fade-up" data-aos-delay="300">
             <img
               src="../assets/lorena.jpg"
               alt="Lorena"
@@ -87,6 +98,7 @@
 
       <!-- Contact Us -->
       <section
+        data-aos="fade-up"
         class="my-16 bg-gray-100 dark:bg-gray-800 p-8 rounded-lg text-center"
       >
         <h2 class="text-3xl font-semibold text-gray-900 dark:text-white">
@@ -110,4 +122,14 @@
 <script setup>
 import Navbar from "../components/NavbarComponent.vue";
 import Footer from "../components/FooterComponent.vue";
+import { onMounted } from "vue";
+import AOS from "aos";
+import "aos/dist/aos.css";
+
+onMounted(() => {
+  AOS.init({
+    duration: 1000,
+    once: true,
+  });
+});
 </script>

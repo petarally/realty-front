@@ -18,8 +18,9 @@
           Odaberite tip građevine
         </option>
         <option value="villa">Vila</option>
+        <option value="houses">Kuća</option>
         <option value="apartment">Stan</option>
-        <option value="field">Zemljište</option>
+        <option value="lands">Zemljište</option>
       </select>
     </div>
 

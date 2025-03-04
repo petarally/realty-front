@@ -37,3 +37,50 @@ Ovaj projekt je razvijen kao dio sveučilišnog kolegija Web aplikacije. Projekt
 - **Express.js**: Web framework za Node.js.
 - **MongoDB**: NoSQL baza podataka.
 - **Multer**: Middleware za rukovanje prijenosom datoteka.
+
+## Rute
+
+### Javne rute
+
+- **Početna**: `/`
+  - Preusmjerava na početnu stranicu na zadani jezik.
+- **Početna (Lokalizirano)**: `/:lang`
+  - Prikazuje početnu stranicu na odabranom jeziku.
+- **O nama**: `/:lang/about`
+  - Prikazuje informacije o projektu.
+- **Nekretnine**: `/:lang/properties`
+  - Prikazuje popis svih dostupnih nekretnina.
+- **Detalji nekretnine**: `/:lang/property/:id`
+  - Prikazuje detaljne informacije o određenoj nekretnini.
+- **Prijava**: `/login`
+  - Prikazuje stranicu za prijavu korisnika.
+
+### Zaštićene rute
+
+- **Admin nadzorna ploča**: `/admin`
+  - Prikazuje nadzornu ploču za administratore. Potrebna je autentifikacija.
+- **Agent nadzorna ploča**: `/agent`
+  - Prikazuje nadzornu ploču za agente. Potrebna je autentifikacija.
+
+### Rute za greške
+
+- **Nije pronađeno**: `/:pathMatch(.*)*`
+  - Prikazuje stranicu s greškom 404 kada tražena ruta nije pronađena.
+
+## Navigacija
+
+Aplikacija podržava više jezika i automatski preusmjerava na zadani jezik ako je odabran nepodržani jezik. Podržani jezici su:
+
+- Engleski (`en`)
+- Njemački (`de`)
+- Talijanski (`it`)
+- Hrvatski (`hr`)
+
+Aplikacija također dinamički postavlja naslov dokumenta na temelju trenutne rute i jezika.
+
+### Login podaci
+
+| Rola    | username           | password |
+| ------- | ------------------ | -------- |
+| `agent` | `idadic@gmail.com` | `idadic` |
+| `admin` | `ddadic@gmail.com` | `ddadic` |
