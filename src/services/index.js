@@ -1,7 +1,7 @@
 import axios from "axios";
 
 let Service = axios.create({
-  baseURL: "http://localhost:3232/",
+  baseURL: import.meta.env.VITE_BACKEND_URL,
 });
 
 Service.interceptors.request.use((request) => {
