@@ -6,6 +6,10 @@
 
 Ovaj projekt je razvijen kao dio sveučilišnog kolegija Web aplikacije. Projekt se sastoji od frontend i backend dijela. Backend dio projekta možete pronaći na [realty-backend](https://github.com/petarally/realty-backend).
 
+## Link na projekt
+
+https://realty-front-three.vercel.app/hr
+
 ## Funkcionalnosti
 
 ### Frontend
