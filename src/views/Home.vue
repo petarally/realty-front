@@ -109,10 +109,10 @@
 </template>
 
 <script setup>
-import { ref, onMounted, computed } from "vue";
-import officeImage from "../assets/office.jpg";
-import { useRouter } from "vue-router";
+import { ref, onMounted, computed, watch, watchEffect } from "vue";
+import { useRouter, useRoute } from "vue-router";
 import { useHead } from "@vueuse/head";
+import officeImage from "../assets/office.jpg";
 import Filter from "../components/FilterComponent.vue";
 import Navbar from "../components/NavbarComponent.vue";
 import PropertyCard from "../components/PropertyCardComponent.vue";
@@ -121,6 +121,8 @@ import axios from "../axios";
 
 const responseData = ref([]);
 const router = useRouter();
+const route = useRoute();
+
 
 const fetchData = async () => {
   try {
@@ -132,23 +134,23 @@ const fetchData = async () => {
   }
 };
 
+
 const handleCardClick = (id) => {
   router.push({ name: "Property", params: { id } });
 };
 
-const lastFourPosts = computed(() => {
-  return responseData.value.slice(-4).reverse();
-});
-
-const lastEightToFourPosts = computed(() => {
-  return responseData.value.slice(-8, -4).reverse();
-});
+const lastFourPosts = computed(() => responseData.value.slice(-4).slice().reverse());
+const lastEightToFourPosts = computed(() => responseData.value.slice(-8, -4).slice().reverse());
 
 onMounted(() => {
   fetchData();
 });
 
-const selectedLanguage = localStorage.getItem("language") || "hr";
+watch(() => route.params.lang, () => {
+  fetchData();
+});
+
+const selectedLanguage = computed(() => localStorage.getItem("language") || "hr");
 
 const metaKeywords = {
   en: "Real estate, vacation, rental, property, Croatia, Istria",
@@ -157,12 +159,14 @@ const metaKeywords = {
   de: "Immobilien, Urlaub, Miete, Eigentum, Kroatien, Istrien",
 };
 
-useHead({
-  meta: [
-    {
-      name: "keywords",
-      content: metaKeywords[selectedLanguage],
-    },
-  ],
+watchEffect(() => {
+  useHead({
+    meta: [
+      {
+        name: "keywords",
+        content: metaKeywords[selectedLanguage.value],
+      },
+    ],
+  });
 });
 </script>
